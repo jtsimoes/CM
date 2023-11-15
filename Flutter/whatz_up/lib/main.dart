@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:whatz_up/screens/calls.dart';
+import 'package:whatz_up/screens/chats.dart';
+import 'package:whatz_up/screens/communities.dart';
+import 'package:whatz_up/screens/updates.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +18,7 @@ class MyApp extends StatelessWidget {
     const String appTitle = 'WhatzUp';
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: appTitle,
       /*theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -23,6 +28,32 @@ class MyApp extends StatelessWidget {
         length: 4,
         child: Scaffold(
           appBar: AppBar(
+            title: const Text(appTitle),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.camera_alt),
+                tooltip: 'Camera',
+                onPressed: () {
+                  // TODO: Implement search functionality
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.search),
+                tooltip: 'Search',
+                onPressed: () {
+                  // TODO: Implement more options functionality
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.more_vert),
+                tooltip: 'Menu',
+                onPressed: () {
+                  // Create a dropdown menu with the following options:
+                  // New group, New broadcast, WhatsApp Web, Starred messages,
+                  // Settings, and Log out
+                },
+              ),
+            ],
             bottom: const TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.people)),
@@ -31,21 +62,20 @@ class MyApp extends StatelessWidget {
                 Tab(text: 'Calls'),
               ],
             ),
-            title: const Text(appTitle),
           ),
           body: const TabBarView(
             children: [
-              Text('Comunidades'),
-              Text('Conversas'),
-              Text('Estados'),
-              Text('Chamadas'),
+              CommunitiesScreen(),
+              ChatsScreen(),
+              StatusScreen(),
+              CallsScreen(),
             ],
           ),
         ),
       ),
     );
 
-  /*@override
+    /*@override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
