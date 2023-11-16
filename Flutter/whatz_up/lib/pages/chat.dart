@@ -15,6 +15,14 @@ class ChatPageState extends State<ChatPage> {
   bool isLoading = false;
   bool isPause = false;
 
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+  }
+
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
@@ -82,6 +90,7 @@ class ChatPageState extends State<ChatPage> {
       body: Stack(
         children: [
           SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               children: <Widget>[
                 DateChip(
@@ -159,7 +168,7 @@ class ChatPageState extends State<ChatPage> {
                   date: now,
                 ),
                 const BubbleSpecialOne(
-                  text: 'New one',
+                  text: 'Another one',
                   tail: false,
                   color: Color(0xFF015146),
                   sent: true,
@@ -167,44 +176,57 @@ class ChatPageState extends State<ChatPage> {
                   seen: false,
                   textStyle: TextStyle(color: Colors.white),
                 ),
+                const BubbleSpecialOne(
+                  text: 'And another one',
+                  tail: false,
+                  color: Color(0xFF015146),
+                  sent: true,
+                  delivered: false,
+                  seen: false,
+                  textStyle: TextStyle(color: Colors.white),
+                ),
+                const BubbleSpecialOne(
+                  text: 'DJ Khaled',
+                  tail: false,
+                  color: Color(0xFF36353a),
+                  isSender: false,
+                  textStyle: TextStyle(color: Colors.white),
+                ),
                 const SizedBox(
-                  height: 10,
+                  height: 80,
                 )
               ],
             ),
           ),
-        ],
-      ),
-      bottomNavigationBar: SizedBox(
-        height: 65,
-        child: MessageBar(
-          messageBarColor: Colors.black,
-          sendButtonColor: Colors.greenAccent,
-          messageBarHintStyle: const TextStyle(color: Colors.grey),
-          messageBarHitText: ' Message',
-          onSend: (_) => print(_),
-          actions: [
-            InkWell(
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 24,
-              ),
-              onTap: () {},
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8, right: 8),
-              child: InkWell(
+          MessageBar(
+            messageBarColor: Colors.black,
+            sendButtonColor: Colors.greenAccent,
+            messageBarHintStyle: const TextStyle(color: Colors.grey),
+            messageBarHitText: ' Message',
+            onSend: (_) => {print(_), _scrollToBottom()},
+            actions: [
+              InkWell(
                 child: const Icon(
-                  Icons.emoji_emotions,
+                  Icons.add,
                   color: Colors.white,
                   size: 24,
                 ),
                 onTap: () {},
               ),
-            ),
-          ],
-        ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: InkWell(
+                  child: const Icon(
+                    Icons.emoji_emotions,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                  onTap: () {},
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -273,5 +295,10 @@ class ChatPageState extends State<ChatPage> {
         position = const Duration();
       });
     });
+  }
+
+  // Call this method after adding a new message to the chat
+  void _scrollToBottom() {
+    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
   }
 }
