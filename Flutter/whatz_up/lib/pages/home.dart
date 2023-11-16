@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
               icon: const Icon(Icons.camera_alt),
               tooltip: 'Camera',
               onPressed: () {
-                // TODO: Implement search functionality
+                // TODO: Finish camera functionality
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
               icon: const Icon(Icons.search),
               tooltip: 'Search',
               onPressed: () {
-                // TODO: Implement more options functionality
+                // TODO: Implement search functionality
               },
             ),
             PopupMenuButton<String>(

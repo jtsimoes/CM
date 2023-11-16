@@ -26,7 +26,7 @@ class ChatsPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.message),
         onPressed: () {
-          // TODO: Navigate to new chat screen
+          // TODO: Navigate to select contact screen
         },
       ),
     );

@@ -60,6 +60,17 @@ class StatusPage extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.camera_alt),
+        onPressed: () {
+          // TODO: Finish camera functionality
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const WhatsappStoryEditor()),
+          );
+        },
+      ),
     );
   }
 }
