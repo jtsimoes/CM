@@ -19,7 +19,7 @@ class ChatsPage extends StatelessWidget {
                 'Last message from user $index'), // Replace with actual last message
             trailing:
                 const Text('10:00'), // Replace with actual time of last message
-            onTap: () => context.go('/chat/$index'),
+            onTap: () => context.push('/chat/$index'),
           );
         },
       ),

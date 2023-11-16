@@ -49,15 +49,35 @@ class HomePage extends StatelessWidget {
                 // TODO: Implement more options functionality
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.more_vert),
-              tooltip: 'Menu',
-              onPressed: () {
-                // Create a dropdown menu with the following options:
-                // New group, New broadcast, WhatsApp Web, Starred messages,
-                // Settings, and Log out
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                print(value);
               },
-            ),
+              itemBuilder: (BuildContext contesxt) {
+                return [
+                  const PopupMenuItem(
+                    value: "New group",
+                    child: Text("New group"),
+                  ),
+                  const PopupMenuItem(
+                    value: "New broadcast",
+                    child: Text("New broadcast"),
+                  ),
+                  const PopupMenuItem(
+                    value: "Linked devices",
+                    child: Text("Linked devices"),
+                  ),
+                  const PopupMenuItem(
+                    value: "Starred messages",
+                    child: Text("Starred messages"),
+                  ),
+                  const PopupMenuItem(
+                    value: "Settings",
+                    child: Text("Settings"),
+                  ),
+                ];
+              },
+            )
           ],
           bottom: const TabBar(
             tabs: [

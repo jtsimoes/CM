@@ -33,7 +33,7 @@ class ChatPageState extends State<ChatPage> {
             IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                context.go('/');
+                context.pop('/');
               },
             ),
             Container(
@@ -50,9 +50,12 @@ class ChatPageState extends State<ChatPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('User A'), // Replace with actual user's name
               Text(
-                'Online', // "Last seen today at 10:00" or "Online"
+                'User A', // Replace with actual user's name
+                style: TextStyle(fontSize: 19),
+              ),
+              Text(
+                'Last seen today at 12:46', // "Last seen today at 12:46" or "Online"
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 12,
