@@ -22,12 +22,9 @@ class StatusPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start, // Add this line
         children: [
-          const Expanded(
-            flex: 1,
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text('Status', style: TextStyle(fontSize: 24)),
-            ),
+          const Padding(
+            padding: EdgeInsets.all(20),
+            child: Text('Status', style: TextStyle(fontSize: 24)),
           ),
           Expanded(
             flex: 1,
@@ -46,18 +43,11 @@ class StatusPage extends StatelessWidget {
               },
             ),
           ),
-          const Expanded(
-            flex: 1,
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text('Channels', style: TextStyle(fontSize: 24)),
-            ),
+          const Padding(
+            padding: EdgeInsets.all(20),
+            child: Text('Channels', style: TextStyle(fontSize: 24)),
           ),
-          const Expanded(
-            flex: 1,
-            child: Text(
-                'Channels content goes here'), // Replace this with your channels widget
-          ),
+          const Text('Channels content goes here'),
         ],
       ),
       floatingActionButton: FloatingActionButton(

@@ -10,7 +10,7 @@ class CommunitiesPage extends StatelessWidget {
         title: const Text('Communities'),
       ),
       body: const Center(
-        child: Text('This is the Communities tab.'),
+        child: Placeholder(),
       ),
     );
   }

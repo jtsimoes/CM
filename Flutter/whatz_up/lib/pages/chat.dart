@@ -28,41 +28,42 @@ class ChatPageState extends State<ChatPage> {
     final now = DateTime.now();
     return Scaffold(
       appBar: AppBar(
-        leading: Row(
+        automaticallyImplyLeading: false,
+        titleSpacing: 0,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                context.pop('/');
+                context.pop();
               },
             ),
             Container(
-              margin: const EdgeInsets.only(top: 8, bottom: 8),
+              padding: const EdgeInsets.only(right: 10),
               child: const CircleAvatar(
                 child: Text(
                     'A'), // Replace with actual user's initials or profile picture
               ),
             ),
-          ],
-        ),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'User A', // Replace with actual user's name
-                style: TextStyle(fontSize: 19),
-              ),
-              Text(
-                'Last seen today at 12:46', // "Last seen today at 12:46" or "Online"
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12,
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'User A', // Replace with actual user's name
+                  style: TextStyle(fontSize: 19),
                 ),
-              ),
-            ],
-          ),
+                Text(
+                  'Last seen today at 12:46', // "Last seen today at 12:46" or "Online"
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
         actions: <Widget>[
           IconButton(

@@ -1,7 +1,7 @@
 import 'package:whatz_up/utils/globals.dart';
 
 class ChatsPage extends StatelessWidget {
-  const ChatsPage({Key? key}) : super(key: key); // TODO: Why?
+  const ChatsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
