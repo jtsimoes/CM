@@ -79,12 +79,38 @@ class HomePage extends StatelessWidget {
               },
             )
           ],
-          bottom: const TabBar(
+          bottom: TabBar.secondary(
             tabs: [
-              Tab(icon: Icon(Icons.people)),
-              Tab(text: 'Chats'),
-              Tab(text: 'Updates'),
-              Tab(text: 'Calls'),
+              const Tab(icon: Icon(Icons.people)),
+              Tab(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text('Chats'),
+                      if (true) // TODO: Show/hide according to unread messages count
+                        Container(
+                          margin: const EdgeInsets.only(left: 5),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(9))),
+                          alignment: Alignment.center,
+                          height: 16,
+                          width: 16,
+                          child: const Text(
+                            '3', // TODO: Update count according to total of unread messages
+                            style: TextStyle(
+                              fontSize: 9,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                    ]),
+              ),
+              const Tab(text: 'Updates'),
+              const Tab(text: 'Calls'),
             ],
           ),
         ),
