@@ -1,6 +1,6 @@
 flutter_icons:
   # Customize the parameters below and run: dart run flutter_launcher_icons
-  android: "launcher_icon"
+  android: true
   adaptive_icon_background: "#051B23"
   adaptive_icon_foreground: "assets/logos/logo_1024.png"
   ios: true
