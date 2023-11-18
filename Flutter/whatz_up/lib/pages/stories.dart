@@ -19,10 +19,10 @@ class StoryViewDelegate extends StatefulWidget {
   const StoryViewDelegate({super.key, this.stories});
 
   @override
-  _StoryViewDelegateState createState() => _StoryViewDelegateState();
+  StoryViewDelegateState createState() => StoryViewDelegateState();
 }
 
-class _StoryViewDelegateState extends State<StoryViewDelegate> {
+class StoryViewDelegateState extends State<StoryViewDelegate> {
   final StoryController controller = StoryController();
   List<StoryItem> storyItems = [];
 
