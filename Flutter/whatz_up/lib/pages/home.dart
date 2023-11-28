@@ -80,14 +80,17 @@ class HomePage extends StatelessWidget {
             )
           ],
           bottom: TabBar.secondary(
+            splashBorderRadius: const BorderRadius.vertical(
+              top: Radius.circular(5),
+            ),
             tabs: [
-              const Tab(icon: Icon(Icons.people)),
+              const Tab(icon: Icon(Icons.event)),
               Tab(
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text('Chats'),
+                      const Text("Chats"),
                       if (true) // TODO: Show/hide according to unread messages count
                         Container(
                           margin: const EdgeInsets.only(left: 5),
@@ -99,7 +102,7 @@ class HomePage extends StatelessWidget {
                           height: 16,
                           width: 16,
                           child: const Text(
-                            '3', // TODO: Update count according to total of unread messages
+                            "3", // TODO: Update count according to total of unread messages
                             style: TextStyle(
                               fontSize: 9,
                               fontWeight: FontWeight.bold,
