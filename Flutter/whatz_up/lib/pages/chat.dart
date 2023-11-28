@@ -49,16 +49,17 @@ class ChatPageState extends State<ChatPage> {
             ),
             const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'User A', // Replace with actual user's name
-                  style: TextStyle(fontSize: 19),
+                  style: TextStyle(fontSize: 18),
                 ),
                 Text(
                   'Last seen today at 12:46', // "Last seen today at 12:46" or "Online"
                   style: TextStyle(
                     color: Colors.grey,
-                    fontSize: 12,
+                    fontSize: 11,
                   ),
                 ),
               ],
@@ -67,6 +68,8 @@ class ChatPageState extends State<ChatPage> {
         ),
         actions: <Widget>[
           IconButton(
+            visualDensity:
+                const VisualDensity(horizontal: -4.0, vertical: 0.0),
             icon: const Icon(Icons.videocam),
             tooltip: 'Video call',
             onPressed: () {
@@ -74,21 +77,52 @@ class ChatPageState extends State<ChatPage> {
             },
           ),
           IconButton(
+            visualDensity:
+                const VisualDensity(horizontal: -2.0, vertical: 0.0),
             icon: const Icon(Icons.call),
             tooltip: 'Call',
             onPressed: () {
               // TODO: Implement more options functionality
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            tooltip: 'More options',
-            onPressed: () {
-              // Create a dropdown menu with the following options:
-              // New group, New broadcast, WhatsApp Web, Starred messages,
-              // Settings, and Log out
+          PopupMenuButton<String>(
+            padding: EdgeInsets.zero,
+            onSelected: (value) {
+              print(value);
             },
-          ),
+            itemBuilder: (BuildContext context) {
+              return [
+                const PopupMenuItem(
+                  value: "View contact",
+                  child: Text("View contact"),
+                ),
+                const PopupMenuItem(
+                  value: "Media, links, and docs",
+                  child: Text("Media, links, and docs"),
+                ),
+                const PopupMenuItem(
+                  value: "Search",
+                  child: Text("Search"),
+                ),
+                const PopupMenuItem(
+                  value: "Mute notifications",
+                  child: Text("Mute notifications"),
+                ),
+                const PopupMenuItem(
+                  value: "Disapearing messages",
+                  child: Text("Disapearing messages"),
+                ),
+                const PopupMenuItem(
+                  value: "Wallpaper",
+                  child: Text("Wallpaper"),
+                ),
+                const PopupMenuItem(
+                  value: "More???",
+                  child: Text("More???"),
+                ),
+              ];
+            },
+          )
         ],
       ),
       body: Stack(
