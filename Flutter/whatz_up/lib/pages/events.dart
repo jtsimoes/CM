@@ -51,9 +51,9 @@ class EventsPage extends StatelessWidget {
                           // Add a space between the title and the text
                           Container(height: 8),
                           // Display the card's text using a font size of 15 and a light grey color
-                          const Text(
-                            "This is a description of the event.",
-                            style: TextStyle(
+                          Text(
+                            "This is a description of the event #$index.",
+                            style: const TextStyle(
                               color: Colors.white70,
                             ),
                           ),

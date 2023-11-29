@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
           ],
           bottom: TabBar.secondary(
             splashBorderRadius: const BorderRadius.vertical(
-              top: Radius.circular(5),
+              top: Radius.circular(2),
             ),
             tabs: [
               const Tab(text: 'Events'),

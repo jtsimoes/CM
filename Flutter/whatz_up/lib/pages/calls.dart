@@ -7,12 +7,12 @@ class CallsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-        itemCount: 10, // Replace with actual number of calls
+        itemCount: 11, // Replace with actual number of calls
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            leading: const CircleAvatar(
+            leading: CircleAvatar(
               child: Text(
-                  'A'), // Replace with actual user's initials or profile picture
+                  'U$index'), // Replace with actual user's initials or profile picture
             ),
             title: Text('User $index'), // Replace with actual user's name
             subtitle: const Row(

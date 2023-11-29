@@ -7,12 +7,12 @@ class ChatsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-        itemCount: 10, // Replace with actual number of chats
+        itemCount: 21, // Replace with actual number of chats
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            leading: const CircleAvatar(
+            leading: CircleAvatar(
               child: Text(
-                  'A'), // Replace with actual user's initials or profile picture
+                  'U$index'), // Replace with actual user's initials or profile picture
             ),
             title: Text('User $index'), // Replace with actual user's name
             subtitle: Text(

@@ -11,8 +11,8 @@ class StatusPage extends StatelessWidget {
   StatusPage({Key? key}) : super(key: key);
 
   final List<Status> statusUpdates = [
-    Status("1", "User 1"),
-    Status("B", "User B"),
+    Status("J", "John Doe"),
+    Status("E", "Example User"),
     // TODO: Add more status updates here
   ];
 
