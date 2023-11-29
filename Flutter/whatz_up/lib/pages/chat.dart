@@ -68,8 +68,7 @@ class ChatPageState extends State<ChatPage> {
         ),
         actions: <Widget>[
           IconButton(
-            visualDensity:
-                const VisualDensity(horizontal: -4.0, vertical: 0.0),
+            visualDensity: const VisualDensity(horizontal: -4.0, vertical: 0.0),
             icon: const Icon(Icons.videocam),
             tooltip: 'Video call',
             onPressed: () {
@@ -77,8 +76,7 @@ class ChatPageState extends State<ChatPage> {
             },
           ),
           IconButton(
-            visualDensity:
-                const VisualDensity(horizontal: -2.0, vertical: 0.0),
+            visualDensity: const VisualDensity(horizontal: -2.0, vertical: 0.0),
             icon: const Icon(Icons.call),
             tooltip: 'Call',
             onPressed: () {
@@ -276,8 +274,7 @@ class ChatPageState extends State<ChatPage> {
         minWidth: 20.0,
       ),
       child: CachedNetworkImage(
-        imageUrl:
-            'https://i0.wp.com/bhutanio.com/wp-content/uploads/2021/11/IMG-20210826-WA0000-edited.webp?fit=720%2C720&ssl=1',
+        imageUrl: 'https://pbs.twimg.com/media/E1nWxAQXMA8RZNY.jpg',
         progressIndicatorBuilder: (context, url, downloadProgress) =>
             CircularProgressIndicator(value: downloadProgress.progress),
         errorWidget: (context, url, error) => const Icon(Icons.error),
