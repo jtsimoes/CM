@@ -1,6 +1,6 @@
 import 'package:whatz_up/pages/calls.dart';
 import 'package:whatz_up/pages/chats.dart';
-import 'package:whatz_up/pages/communities.dart';
+import 'package:whatz_up/pages/events.dart';
 import 'package:whatz_up/pages/updates.dart';
 
 import 'package:whatz_up/utils/globals.dart';
@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
               top: Radius.circular(5),
             ),
             tabs: [
-              const Tab(icon: Icon(Icons.event)),
+              const Tab(text: 'Events'),
               Tab(
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +119,7 @@ class HomePage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            const CommunitiesPage(),
+            const EventsPage(),
             const ChatsPage(),
             StatusPage(),
             const CallsPage(),

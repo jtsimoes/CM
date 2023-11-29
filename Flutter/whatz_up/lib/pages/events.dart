@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CommunitiesPage extends StatelessWidget {
-  const CommunitiesPage({Key? key}) : super(key: key);
+class EventsPage extends StatelessWidget {
+  const EventsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Events"),
-      ),
       body: ListView.builder(
         itemCount: 6, // Replace with actual number of events
         itemBuilder: (BuildContext context, int index) {
