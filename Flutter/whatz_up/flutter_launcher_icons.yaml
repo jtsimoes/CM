@@ -1,21 +1,21 @@
 flutter_icons:
   # Customize the parameters below and run: dart run flutter_launcher_icons
   android: true
-  adaptive_icon_background: "#051B23"
-  adaptive_icon_foreground: "assets/logos/logo_1024.png"
+  adaptive_icon_background: "#52D060"
+  adaptive_icon_foreground: "assets/logos/logo.png"
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/logos/logo_1024.png"
+  image_path: "assets/logos/logo.png"
   min_sdk_android: 21
   web:
     generate: true
-    image_path: "assets/logos/logo_1024.png"
+    image_path: "assets/logos/logo.png"
     background_color: "#051B23"
     theme_color: "#051B23"
   windows:
     generate: true
-    image_path: "assets/logos/logo_256.png"
+    image_path: "assets/logos/logo.png"
     icon_size: 256
   macos:
     generate: true
-    image_path: "assets/logos/logo_1024.png"
+    image_path: "assets/logos/logo.png"
