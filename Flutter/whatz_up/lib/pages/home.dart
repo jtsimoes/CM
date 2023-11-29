@@ -1,7 +1,7 @@
 import 'package:whatz_up/pages/calls.dart';
 import 'package:whatz_up/pages/chats.dart';
 import 'package:whatz_up/pages/events.dart';
-import 'package:whatz_up/pages/updates.dart';
+import 'package:whatz_up/pages/status.dart';
 
 import 'package:whatz_up/utils/globals.dart';
 
