@@ -114,10 +114,6 @@ class ChatPageState extends State<ChatPage> {
                   value: "Wallpaper",
                   child: Text("Wallpaper"),
                 ),
-                const PopupMenuItem(
-                  value: "More???",
-                  child: Text("More???"),
-                ),
               ];
             },
           )

@@ -6,8 +6,27 @@ class StoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StoryViewDelegate(
-        stories: stories,
+      body: FutureBuilder<List<Story>>(
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return StoryViewDelegate(
+              stories: snapshot.data,
+            );
+          }
+
+          if (snapshot.hasError) {
+            return const Text("ERROR");
+          }
+
+          return const Center(
+            child: SizedBox(
+              width: 40,
+              height: 40,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        },
+        future: fetchStories(),
       ),
     );
   }
