@@ -1,16 +1,5 @@
-# whatz_up
+# WhatzUp
 
-A new Flutter project.
+Social media app inspired on WhatsApp, but specifically for connecting people at social events.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+***Note:** for now, internet connection (Wi-Fi or mobile data) is required to obtain online media and fetch external API calls.*
