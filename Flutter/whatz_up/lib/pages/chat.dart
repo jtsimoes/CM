@@ -72,7 +72,7 @@ class ChatPageState extends State<ChatPage> {
             icon: const Icon(Icons.videocam),
             tooltip: 'Video call',
             onPressed: () {
-              // TODO: Implement search functionality
+              // TODO: Implement video call functionality
             },
           ),
           IconButton(
@@ -80,7 +80,7 @@ class ChatPageState extends State<ChatPage> {
             icon: const Icon(Icons.call),
             tooltip: 'Call',
             onPressed: () {
-              // TODO: Implement more options functionality
+              // TODO: Implement voice call functionality
             },
           ),
           PopupMenuButton<String>(
