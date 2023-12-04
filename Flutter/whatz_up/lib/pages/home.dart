@@ -71,9 +71,10 @@ class HomePage extends StatelessWidget {
                     value: "Starred messages",
                     child: Text("Starred messages"),
                   ),
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: "Settings",
-                    child: Text("Settings"),
+                    onTap: () => context.push("/settings"),
+                    child: const Text("Settings"),
                   ),
                 ];
               },
