@@ -54,7 +54,7 @@ class StatusPage extends StatelessWidget {
                   ),
                   title: Text(statusUpdates[index].userName),
                   onTap: () {
-                    context.push("/story");
+                    context.push("/story/$index");
                   },
                 );
               },

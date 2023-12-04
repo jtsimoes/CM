@@ -14,12 +14,14 @@ final router = GoRouter(
     GoRoute(
       name: "chat",
       path: "/chat/:userId",
-      builder: (context, state) => ChatPage(id: state.pathParameters['userId']),
+      builder: (context, state) =>
+          ChatPage(userId: state.pathParameters['userId']),
     ),
     GoRoute(
       name: "story",
-      path: "/story",
-      builder: (context, state) => const StoriesPage(),
+      path: "/story/:userId",
+      builder: (context, state) =>
+          StoriesPage(userId: state.pathParameters['userId']),
     ),
   ],
 );

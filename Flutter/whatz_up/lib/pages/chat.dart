@@ -1,7 +1,7 @@
 import 'package:whatz_up/utils/globals.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key, String? id}) : super(key: key);
+  const ChatPage({Key? key, String? userId}) : super(key: key);
 
   @override
   ChatPageState createState() => ChatPageState();

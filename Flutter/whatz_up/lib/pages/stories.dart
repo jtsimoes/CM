@@ -1,7 +1,7 @@
 import 'package:whatz_up/utils/globals.dart';
 
 class StoriesPage extends StatelessWidget {
-  const StoriesPage({Key? key, String? id}) : super(key: key);
+  const StoriesPage({Key? key, String? userId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
