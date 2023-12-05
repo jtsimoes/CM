@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:whatz_up/utils/globals.dart';
 
 class EventsPage extends StatelessWidget {
   const EventsPage({Key? key}) : super(key: key);
@@ -23,7 +23,9 @@ class EventsPage extends StatelessWidget {
                 splashColor:
                     Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
                 highlightColor: Colors.transparent,
-                onTap: () {},
+                onTap: () {
+                  context.push("/event/$index");
+                },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
