@@ -113,8 +113,9 @@ class SettingsPageState extends State<SettingsPage> {
                 context: context,
                 applicationVersion: 'v1.0.0',
                 applicationIcon:
-                    Image.asset('logos/logo.png', width: 90, height: 90),
-                applicationLegalese: '© 2023 João Simões (88930)',
+                    Image.asset('logos/logo.png', width: 120, height: 120),
+                applicationLegalese:
+                    'João Simões (88930) \nPedro Duarte (97673) \n© 2023',
                 children: const [
                   Text(
                       "\nWhatzUp is a social media app inspired on WhatsApp, but specifically for connecting people at social events."),
