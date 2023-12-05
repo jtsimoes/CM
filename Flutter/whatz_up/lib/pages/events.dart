@@ -30,12 +30,15 @@ class EventsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     // Display an image at the top of the card that fills the width of the card and has a height of 160 pixels
-                    Image.network(
-                      "https://picsum.photos/id/158/550/320",
-                      height: 160,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.bottomCenter,
+                    Hero(
+                      tag: 'hero-event$index',
+                      child: Image.network(
+                        "https://picsum.photos/id/158/550/320",
+                        height: 160,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.bottomCenter,
+                      ),
                     ),
                     // Add a container with padding that contains the card's title, text, and buttons
                     Container(
@@ -51,7 +54,7 @@ class EventsPage extends StatelessWidget {
                             ),
                           ),
                           // Add a space between the title and the text
-                          Container(height: 8),
+                          const SizedBox(height: 8),
                           // Display the card's text using a font size of 15 and a light grey color
                           Text(
                             "This is a description of the event #$index.",
@@ -63,16 +66,18 @@ class EventsPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
-                              TextButton(
-                                child: const Text('BUY TICKETS'),
+                              ElevatedButton(
+                                child: const Text('Buy tickets'),
                                 onPressed: () {/* ... */},
                               ),
-                              const SizedBox(width: 8),
-                              TextButton(
-                                child: const Text('EXPLORE'),
-                                onPressed: () {/* ... */},
+                              const SizedBox(width: 10),
+                              ElevatedButton(
+                                child: const Text('Explore'),
+                                onPressed: () {
+                                  context.push("/event/$index");
+                                },
                               ),
-                              const SizedBox(height: 60),
+                              const SizedBox(height: 70),
                             ],
                           ),
                         ],
