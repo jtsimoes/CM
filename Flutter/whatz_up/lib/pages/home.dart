@@ -72,6 +72,12 @@ class HomePage extends StatelessWidget {
                     child: Text("Starred messages"),
                   ),
                   PopupMenuItem(
+                    // TODO: Profile here or in the settings page?
+                    value: "Profile",
+                    onTap: () => context.push("/profile"),
+                    child: const Text("Profile"),
+                  ),
+                  PopupMenuItem(
                     value: "Settings",
                     onTap: () => context.push("/settings"),
                     child: const Text("Settings"),
