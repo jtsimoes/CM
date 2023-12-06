@@ -66,71 +66,46 @@ class EventPageState extends State<EventPage> {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50),
-            child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Name:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text("Value here!"),
-                ],
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              SizedBox(height: 30),
+              Text(
+                "Date",
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Date:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text("Value here!"),
-                ],
+              Text("10/01/2024 17:00", style: TextStyle(color: Colors.white70)),
+              SizedBox(height: 15),
+              Text(
+                "Description",
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Description:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text("Value here!"),
-                ],
+              Text(
+                  "Bacon ipsum dolor amet bacon t-bone chicken chuck hamburger frankfurter pork loin tongue venison filet mignon. Filet mignon swine kevin spare ribs fatback shank sausage cow biltong pork loin meatball picanha leberkas ground round.",
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(color: Colors.white70)),
+              SizedBox(height: 15),
+              Text(
+                "Price",
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Price:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text("Value here!"),
-                ],
+              Text("69 €", style: TextStyle(color: Colors.white70)),
+              SizedBox(height: 15),
+              Text(
+                "Idk",
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "IDK:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text("Value here!"),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Location:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
+              Text("Value goes here...",
+                  style: TextStyle(color: Colors.white70)),
+              SizedBox(height: 15),
+              Text(
+                "Location",
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
             ]),
           ),
           Container(
-            padding: const EdgeInsets.all(30),
+            padding: const EdgeInsets.fromLTRB(30, 8, 30, 30),
             height: 300,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
