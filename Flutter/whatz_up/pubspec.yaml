@@ -42,6 +42,7 @@ dependencies:
   whatsapp_story_editor: ^0.0.6
   flutter_map: ^4.0.0
   latlong2: ^0.8.2
+  flutter_map_location_marker: ^6.0.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.11.0
