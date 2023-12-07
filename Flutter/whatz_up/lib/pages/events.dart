@@ -90,6 +90,29 @@ class EventsPage extends StatelessWidget {
           );
         },
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              // TODO: Navigate to add new event screen
+            },
+            tooltip: 'Add new event',
+            mini: true,
+            heroTag: null,
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(height: 15),
+          FloatingActionButton(
+            onPressed: () {
+              // TODO: Navigate to favorite events screen
+            },
+            tooltip: 'Favorite events',
+            heroTag: null,
+            child: const Icon(Icons.star),
+          )
+        ],
+      ),
     );
   }
 }
