@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1031335782090",
+    "project_id": "whatz-up-894fd",
+    "storage_bucket": "whatz-up-894fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031335782090:android:2cd7c824b7c71b146a3633",
+        "android_client_info": {
+          "package_name": "com.example.whatz_up"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDctgwJQBB8W4thi7n4nBt-C5l7ElTdIWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
