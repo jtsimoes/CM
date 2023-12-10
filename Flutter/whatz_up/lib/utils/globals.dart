@@ -9,7 +9,7 @@ export 'package:chat_bubbles/chat_bubbles.dart';
 export "package:url_strategy/url_strategy.dart";
 export 'package:audioplayers/audioplayers.dart';
 export 'package:cached_network_image/cached_network_image.dart';
-export 'package:story_view/story_view.dart';
+// export 'package:story_view/story_view.dart';
 export 'package:whatsapp_story_editor/whatsapp_story_editor.dart';
 
 export "package:whatz_up/utils/routes.dart";

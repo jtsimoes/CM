@@ -9,12 +9,12 @@ class Event:
     self.latitude = latitude
     self.longitude = longitude
 
-  def __repr__(self) -> dict:
+  def to_dict(self) -> dict:
     return { 'name': self.name, 'description': self.description, 'price': self.price, 'latitude': self.latitude, 'longitude': self.longitude }
   
   @staticmethod
-  def parse(req: https_fn.Request):
-    data: dict = req.json
+  def parse(req: https_fn.CallableRequest):
+    data: dict = req.data
 
     fields = ['name', 'description', 'price', 'latitude', 'longitude']
     values = {field: data.get(field) for field in fields}

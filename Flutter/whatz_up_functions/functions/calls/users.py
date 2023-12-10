@@ -9,8 +9,8 @@ from models import User
 USER_COLLECTION = "users"
 
 
-@https_fn.on_request()
-def create_user(req: https_fn.Request) -> https_fn.Response:
+@https_fn.on_call()
+def create_user(req: https_fn.CallableRequest) -> https_fn.Response:
     client: gcfirestore.Client = firestore.client()
     db = client.collection(USER_COLLECTION)
 
@@ -18,19 +18,19 @@ def create_user(req: https_fn.Request) -> https_fn.Response:
 
     data_ref = db.document(user.phone_number)
 
-    user_data = repr(user)
+    user_data = user.to_dict()
     del user_data['phone_number']
 
     data_ref.set(user_data)
-    return https_fn.Response(repr(user))
+    return user.to_dict()
 
 
-@https_fn.on_request()
-def get_user(req: https_fn.Request) -> https_fn.Response:
+@https_fn.on_call()
+def get_user(req: https_fn.CallableRequest) -> https_fn.Response:
     client: gcfirestore.Client = firestore.client()
     db = client.collection(USER_COLLECTION)
 
-    phone_number = req.json.get('phone_number')
+    phone_number = req.data.get('phone_number')
     data_ref = db.document(phone_number)
 
-    return https_fn.Response(data_ref.get().to_dict())
+    return data_ref.get().to_dict()

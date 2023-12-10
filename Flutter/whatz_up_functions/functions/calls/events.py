@@ -9,33 +9,33 @@ from models import Event
 EVENT_COLLECTION = "events"
 
 
-@https_fn.on_request()
-def create_event(req: https_fn.Request) -> https_fn.Response:
+@https_fn.on_call()
+def create_event(req: https_fn.CallableRequest) -> https_fn.Response:
     client: gcfirestore.Client = firestore.client()
     db = client.collection(EVENT_COLLECTION)
 
     event = Event.parse(req)
 
     data_ref = db.document()
-    event_data = repr(event)
+    event_data = event.to_dict()
     data_ref.set(event_data)
 
-    return https_fn.Response({'id': data_ref.id, **event_data})
+    return {'id': data_ref.id, **event_data}
 
 
-@https_fn.on_request()
-def get_event(req: https_fn.Request) -> https_fn.Response:
+@https_fn.on_call()
+def get_event(req: https_fn.CallableRequest) -> https_fn.Response:
     client: gcfirestore.Client = firestore.client()
     db = client.collection(EVENT_COLLECTION)
 
-    event_id = req.json.get('id')
+    event_id = req.data.get('id')
     data_ref = db.document(event_id)
 
-    return https_fn.Response(data_ref.get().to_dict())
+    return {'id': event_id, **data_ref.get().to_dict()}
 
 
-@https_fn.on_request()
-def get_events(req: https_fn.Request) -> https_fn.Response:
+@https_fn.on_call()
+def get_events(req: https_fn.CallableRequest) -> https_fn.Response:
     client: gcfirestore.Client = firestore.client()
     db = client.collection(EVENT_COLLECTION)
-    return https_fn.Response(db.get())
+    return [{'id': doc.id, **doc.to_dict()} for doc in db.stream()]

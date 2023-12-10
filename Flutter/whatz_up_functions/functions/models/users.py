@@ -10,12 +10,12 @@ class User:
         self.biography = biography
         self.avatar = avatar
 
-    def __repr__(self) -> str:
+    def to_dict(self) -> str:
         return { 'phone_number': self.phone_number, 'name': self.name, 'biography': self.biography, 'avatar': self.avatar }
 
     @staticmethod
-    def parse(req: https_fn.Request):
-        data: dict = req.json
+    def parse(req: https_fn.CallableRequest):
+        data: dict = req.data
 
         fields = ['phone_number', 'name', 'biography', 'avatar']
         values = {field: data.get(field) for field in fields}
