@@ -10,7 +10,9 @@ class EventsPage extends StatelessWidget {
       future: Event.find(),
       builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(); // Show a loading indicator while waiting
+          return const Center(
+            child: CircularProgressIndicator(),
+          ); // Show a loading indicator while waiting
         } else if (snapshot.hasError) {
           return Text(
               'Error: ${snapshot.error}'); // Show error message if something went wrong
@@ -108,5 +110,4 @@ class EventsPage extends StatelessWidget {
       },
     );
   }
-
 }
