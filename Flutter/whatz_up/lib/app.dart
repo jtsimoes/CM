@@ -1,30 +1,51 @@
 import "package:whatz_up/utils/globals.dart";
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+final GlobalKey<GlobalAppState> globalAppKey = GlobalKey<GlobalAppState>();
+
+class App extends StatefulWidget {
+  App({Key? key}) : super(key: key ?? globalAppKey);
+
+  @override
+  GlobalAppState createState() => GlobalAppState();
+}
+
+class GlobalAppState extends State<App> {
+  final ValueNotifier<bool> isDarkTheme =
+      ValueNotifier<bool>(boxSettings.get('darkMode', defaultValue: true));
+
+  // Toggle dark theme
+  void toggleTheme() {
+    isDarkTheme.value = !isDarkTheme.value;
+    boxSettings.put('darkMode', isDarkTheme.value);
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // Use .router for GoRouter
-    return MaterialApp.router(
-      title: 'WhatzUp',
+    // Listen to changes in the dark theme preference to refresh the UI
+    return ValueListenableBuilder(
+      valueListenable: isDarkTheme,
+      builder: (context, isDarkTheme, child) {
+        // Use .router for GoRouter
+        return MaterialApp.router(
+          color: const Color(0x00128C7E),
+          title: 'WhatzUp',
 
-      // Appearence options
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.dark,
+          // Appearance options
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
 
-      // Routing options
-      routerConfig: router,
+          // Routing options
+          routerConfig: router,
 
-      // Translation options
-      locale: const Locale("en", "US"),
+          // Translation options
+          locale: const Locale("en", "US"),
 
-      // Debug options
-      debugShowCheckedModeBanner: false,
-      //showSemanticsDebugger: true,
-      //showPerformanceOverlay: true,
+          // Debug options
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }

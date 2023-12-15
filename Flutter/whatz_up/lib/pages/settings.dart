@@ -1,3 +1,4 @@
+import 'package:whatz_up/app.dart';
 import 'package:whatz_up/utils/globals.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -13,7 +14,6 @@ class SettingsPageState extends State<SettingsPage> {
     super.initState();
   }
 
-  bool darkMode = true;
   bool notifications = true;
 
   @override
@@ -87,10 +87,10 @@ class SettingsPageState extends State<SettingsPage> {
           SwitchListTile(
             secondary: const Icon(Icons.dark_mode),
             title: const Text("Dark mode"),
-            value: darkMode,
+            value: boxSettings.get('darkMode', defaultValue: true),
             onChanged: (bool value) {
               setState(() {
-                darkMode = value;
+                globalAppKey.currentState!.toggleTheme();
               });
             },
           ),
