@@ -17,6 +17,7 @@ void main() async {
   );
 
   // Init Hive
+  await Hive.initFlutter();
   boxSettings = await Hive.openBox('settings');
 
   // Starts the app
