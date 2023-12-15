@@ -6,6 +6,7 @@ export "package:flutter/services.dart";
 
 export "package:go_router/go_router.dart";
 export 'package:hive/hive.dart';
+export 'package:flutter_locales/flutter_locales.dart';
 export 'package:chat_bubbles/chat_bubbles.dart';
 export "package:url_strategy/url_strategy.dart";
 export 'package:audioplayers/audioplayers.dart';
