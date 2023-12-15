@@ -8,6 +8,9 @@ void main() async {
   // Waits for Flutter engine to be ready
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Init localization
+  await Locales.init(['en', 'pt']);
+
   // Init Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

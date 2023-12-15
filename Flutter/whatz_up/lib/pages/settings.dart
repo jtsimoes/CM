@@ -34,7 +34,7 @@ class SettingsPageState extends State<SettingsPage> {
             ),
             const Padding(
               padding: EdgeInsets.only(left: 8.0),
-              child: Text("Settings"),
+              child: LocaleText('settings_title'),
             ),
           ],
         ),
@@ -43,34 +43,46 @@ class SettingsPageState extends State<SettingsPage> {
         children: [
           ListTile(
             leading: const Icon(Icons.key),
-            title: const Text("Account"),
-            subtitle: const Text(
-                "Security notifications, two-step verification, change number"),
+            title: const LocaleText('settings_account'),
+            subtitle: const LocaleText(
+              'settings_account_description',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {},
           ),
           ListTile(
             leading: const Icon(Icons.lock),
-            title: const Text("Privacy"),
-            subtitle:
-                const Text("Last seen, block contacts, disappearing messages"),
+            title: const LocaleText('settings_privacy'),
+            subtitle: const LocaleText(
+              'settings_privacy_description',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {},
           ),
           ListTile(
             leading: const Icon(Icons.language),
-            title: const Text("Language"),
-            subtitle: const Text("English (device's language)"),
-            onTap: () {},
+            title: const LocaleText('settings_language'),
+            subtitle: (Locales.currentLocale(context).toString() == 'en')
+                ? const Text("English (United States)")
+                : const Text("Português (Portugal)"),
+            onTap: () {
+              (Locales.currentLocale(context).toString() == 'en')
+                  ? Locales.change(context, 'pt')
+                  : Locales.change(context, 'en');
+            },
           ),
           ListTile(
             leading: const Icon(Icons.wallpaper),
-            title: const Text("Wallpaper"),
+            title: const LocaleText('settings_wallpaper'),
             onTap: () {},
           ),
           SwitchListTile(
             secondary: const Icon(Icons.notifications),
-            title: const Text("Notifications"),
+            title: const LocaleText('settings_notifications'),
             value: notifications,
             onChanged: (bool value) {
               setState(() {
@@ -80,13 +92,13 @@ class SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             leading: const Icon(Icons.font_download_outlined),
-            title: const Text("Font size"),
-            subtitle: const Text("Medium"),
+            title: const LocaleText('settings_font_size'),
+            subtitle: const LocaleText('settings_font_size_medium'),
             onTap: () {},
           ),
           SwitchListTile(
             secondary: const Icon(Icons.dark_mode),
-            title: const Text("Dark mode"),
+            title: const LocaleText('settings_dark_mode'),
             value: boxSettings.get('darkMode', defaultValue: true),
             onChanged: (bool value) {
               setState(() {
@@ -96,18 +108,18 @@ class SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             leading: const Icon(Icons.backup),
-            title: const Text("Chat backup"),
+            title: const LocaleText('settings_chat_backup'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {},
           ),
           ListTile(
             leading: const Icon(Icons.help_outline),
-            title: const Text("Help"),
+            title: const LocaleText('settings_help'),
             onTap: () {},
           ),
           ListTile(
             leading: const Icon(Icons.info_outline),
-            title: const Text("About"),
+            title: const LocaleText('settings_about'),
             onTap: () {
               showAboutDialog(
                 context: context,
