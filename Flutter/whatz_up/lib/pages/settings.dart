@@ -108,7 +108,11 @@ class SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             leading: const Icon(Icons.backup),
-            title: const LocaleText('settings_chat_backup'),
+            title: const LocaleText(
+              'settings_chat_backup',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {},
           ),
