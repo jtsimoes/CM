@@ -14,8 +14,6 @@ class SettingsPageState extends State<SettingsPage> {
     super.initState();
   }
 
-  bool notifications = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,10 +81,10 @@ class SettingsPageState extends State<SettingsPage> {
           SwitchListTile(
             secondary: const Icon(Icons.notifications),
             title: const LocaleText('settings_notifications'),
-            value: notifications,
+            value: boxSettings.get('notifications', defaultValue: false)!,
             onChanged: (bool value) {
               setState(() {
-                notifications = value;
+                boxSettings.put('notifications', value);
               });
             },
           ),
