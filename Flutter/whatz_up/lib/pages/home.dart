@@ -50,37 +50,20 @@ class HomePage extends StatelessWidget {
               },
             ),
             PopupMenuButton<String>(
-              onSelected: (value) {
-                print(value);
-              },
+              offset: const Offset(0, 50),
               itemBuilder: (BuildContext context) {
                 return [
-                  const PopupMenuItem(
-                    value: "New group",
-                    child: Text("New group"),
-                  ),
-                  const PopupMenuItem(
-                    value: "New broadcast",
-                    child: Text("New broadcast"),
-                  ),
-                  const PopupMenuItem(
-                    value: "Linked devices",
-                    child: Text("Linked devices"),
-                  ),
-                  const PopupMenuItem(
-                    value: "Starred messages",
-                    child: Text("Starred messages"),
-                  ),
                   PopupMenuItem(
-                    // TODO: Profile here or in the settings page?
-                    value: "Profile",
                     onTap: () => context.push("/profile"),
                     child: const Text("Profile"),
                   ),
                   PopupMenuItem(
-                    value: "Settings",
                     onTap: () => context.push("/settings"),
                     child: const Text("Settings"),
+                  ),
+                  PopupMenuItem(
+                    onTap: () => print("TODO: Logout"),
+                    child: const Text("Logout"),
                   ),
                 ];
               },
