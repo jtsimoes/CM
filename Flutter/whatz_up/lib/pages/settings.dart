@@ -81,10 +81,10 @@ class SettingsPageState extends State<SettingsPage> {
           SwitchListTile(
             secondary: const Icon(Icons.notifications),
             title: const LocaleText('settings_notifications'),
-            value: boxSettings.get('notifications', defaultValue: false)!,
+            value: settingsBox.get('notifications', defaultValue: false)!,
             onChanged: (bool value) {
               setState(() {
-                boxSettings.put('notifications', value);
+                settingsBox.put('notifications', value);
               });
             },
           ),
@@ -97,7 +97,7 @@ class SettingsPageState extends State<SettingsPage> {
           SwitchListTile(
             secondary: const Icon(Icons.dark_mode),
             title: const LocaleText('settings_dark_mode'),
-            value: boxSettings.get('darkMode', defaultValue: true)!,
+            value: settingsBox.get('darkMode', defaultValue: true)!,
             onChanged: (bool value) {
               setState(() {
                 globalAppKey.currentState!.toggleTheme();

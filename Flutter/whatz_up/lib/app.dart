@@ -11,12 +11,12 @@ class App extends StatefulWidget {
 
 class GlobalAppState extends State<App> {
   final ValueNotifier<bool> isDarkTheme =
-      ValueNotifier<bool>(boxSettings.get('darkMode', defaultValue: true)!);
+      ValueNotifier<bool>(settingsBox.get('darkMode', defaultValue: true)!);
 
   // Toggle dark theme
   void toggleTheme() {
     isDarkTheme.value = !isDarkTheme.value;
-    boxSettings.put('darkMode', isDarkTheme.value);
+    settingsBox.put('darkMode', isDarkTheme.value);
   }
 
   // This widget is the root of your application.

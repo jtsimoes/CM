@@ -15,11 +15,11 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    nameController.text = boxProfile.get('name', defaultValue: 'João Tomás')!;
+    nameController.text = profileBox.get('name', defaultValue: 'João Tomás')!;
     bioController.text =
-        boxProfile.get('bio', defaultValue: 'Hey there! I am using WhatzUp!')!;
+        profileBox.get('bio', defaultValue: 'Hey there! I am using WhatzUp!')!;
     phoneController.text =
-        boxProfile.get('phone', defaultValue: '+351 960 960 960')!;
+        profileBox.get('phone', defaultValue: '+351 960 960 960')!;
   }
 
   @override
@@ -71,7 +71,7 @@ class ProfilePageState extends State<ProfilePage> {
                 radius: 110,
                 child: ClipOval(
                   child: Image.network(
-                    boxProfile.get('avatar',
+                    profileBox.get('avatar',
                         defaultValue:
                             'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png')!,
                   ),
@@ -154,8 +154,8 @@ class ProfilePageState extends State<ProfilePage> {
                           print('Bio: ${bioController.text}');
                           print('Phone: ${phoneController.text}');
 
-                          boxProfile.put('name', nameController.text);
-                          boxProfile.put('bio', bioController.text);
+                          profileBox.put('name', nameController.text);
+                          profileBox.put('bio', bioController.text);
 
                           // If the form is valid, display a snackbar. In the real world,
                           // you'd often call a server or save the information in a database.

@@ -18,8 +18,8 @@ void main() async {
 
   // Init Hive
   await Hive.initFlutter();
-  boxSettings = await Hive.openBox('settings');
-  boxProfile = await Hive.openBox('profile');
+  settingsBox = await Hive.openBox('settings');
+  profileBox = await Hive.openBox('profile');
 
   // Starts the app
   runApp(App());
