@@ -128,8 +128,12 @@ class SettingsPageState extends State<SettingsPage> {
               showAboutDialog(
                 context: context,
                 applicationVersion: 'v1.0.0',
-                applicationIcon:
-                    Image.asset('logos/logo.png', width: 120, height: 120),
+                applicationIcon: Image.asset(
+                  'assets/logos/logo.png',
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                ),
                 applicationLegalese:
                     'João Simões (88930) \nPedro Duarte (97673) \n© 2023',
                 children: const [
