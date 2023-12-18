@@ -1,3 +1,4 @@
 import 'package:whatz_up/utils/globals.dart';
 
-late Box boxSettings;
+late Box<bool> boxSettings;
+late Box<String> boxProfile;

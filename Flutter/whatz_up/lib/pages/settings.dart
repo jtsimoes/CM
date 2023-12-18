@@ -99,7 +99,7 @@ class SettingsPageState extends State<SettingsPage> {
           SwitchListTile(
             secondary: const Icon(Icons.dark_mode),
             title: const LocaleText('settings_dark_mode'),
-            value: boxSettings.get('darkMode', defaultValue: true),
+            value: boxSettings.get('darkMode', defaultValue: true)!,
             onChanged: (bool value) {
               setState(() {
                 globalAppKey.currentState!.toggleTheme();

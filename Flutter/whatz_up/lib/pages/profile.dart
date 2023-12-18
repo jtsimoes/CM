@@ -8,9 +8,27 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController bioController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+    nameController.text = boxProfile.get('name', defaultValue: 'João Tomás')!;
+    bioController.text =
+        boxProfile.get('bio', defaultValue: 'Hey there! I am using WhatzUp!')!;
+    phoneController.text =
+        boxProfile.get('phone', defaultValue: '+351 960 960 960')!;
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controllers when the widget is disposed.
+    nameController.dispose();
+    bioController.dispose();
+    phoneController.dispose();
+    super.dispose();
   }
 
   // Create a global key that uniquely identifies the Form widget
@@ -74,7 +92,7 @@ class ProfilePageState extends State<ProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
-                  initialValue: 'João Tomás',
+                  controller: nameController,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Name',
@@ -92,7 +110,7 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
                 const SizedBox(height: 15),
                 TextFormField(
-                  initialValue: 'Hey there! I am using WhatzUp!',
+                  controller: bioController,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Bio',
@@ -107,8 +125,8 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  controller: phoneController,
                   enabled: false,
-                  initialValue: '+351 960 960 960',
                   decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       labelText: 'Phone number',
@@ -123,10 +141,23 @@ class ProfilePageState extends State<ProfilePage> {
                       onPressed: () {
                         // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate()) {
+                          print('Name: ${nameController.text}');
+                          print('Bio: ${bioController.text}');
+                          print('Phone: ${phoneController.text}');
+
+                          boxProfile.put('name', nameController.text);
+                          boxProfile.put('bio', bioController.text);
+
                           // If the form is valid, display a snackbar. In the real world,
                           // you'd often call a server or save the information in a database.
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
+                            SnackBar(
+                              showCloseIcon: true,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.tertiary,
+                              content:
+                                  const Text('Profile edited successfully!'),
+                            ),
                           );
                         }
                       },
