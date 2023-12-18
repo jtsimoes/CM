@@ -67,7 +67,16 @@ class ProfilePageState extends State<ProfilePage> {
           Stack(
             fit: StackFit.passthrough,
             children: <Widget>[
-              const CircleAvatar(radius: 100, child: Text('JT')),
+              CircleAvatar(
+                radius: 110,
+                child: ClipOval(
+                  child: Image.network(
+                    boxProfile.get('avatar',
+                        defaultValue:
+                            'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png')!,
+                  ),
+                ),
+              ),
               Positioned(
                 left: (MediaQuery.of(context).size.width / 2) + 45,
                 bottom: 25,
@@ -161,7 +170,7 @@ class ProfilePageState extends State<ProfilePage> {
                           );
                         }
                       },
-                      child: const Text('Edit'),
+                      child: const Text('Edit profile'),
                     ),
                   ),
                 ),
