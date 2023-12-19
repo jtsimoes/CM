@@ -22,5 +22,5 @@ void main() async {
   profileBox = await Hive.openBox('profile');
 
   // Starts the app
-  runApp(App());
+  runApp(const App());
 }

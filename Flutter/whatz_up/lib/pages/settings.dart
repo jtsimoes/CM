@@ -1,4 +1,3 @@
-import 'package:whatz_up/app.dart';
 import 'package:whatz_up/utils/globals.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -100,7 +99,7 @@ class SettingsPageState extends State<SettingsPage> {
             value: settingsBox.get('darkMode', defaultValue: true)!,
             onChanged: (bool value) {
               setState(() {
-                globalAppKey.currentState!.toggleTheme();
+                settingsBox.put('darkMode', value);
               });
             },
           ),

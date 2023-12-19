@@ -1,23 +1,7 @@
 import "package:whatz_up/utils/globals.dart";
 
-final GlobalKey<GlobalAppState> globalAppKey = GlobalKey<GlobalAppState>();
-
-class App extends StatefulWidget {
-  App({Key? key}) : super(key: key ?? globalAppKey);
-
-  @override
-  GlobalAppState createState() => GlobalAppState();
-}
-
-class GlobalAppState extends State<App> {
-  final ValueNotifier<bool> isDarkTheme =
-      ValueNotifier<bool>(settingsBox.get('darkMode', defaultValue: true)!);
-
-  // Toggle dark theme
-  void toggleTheme() {
-    isDarkTheme.value = !isDarkTheme.value;
-    settingsBox.put('darkMode', isDarkTheme.value);
-  }
+class App extends StatelessWidget {
+  const App({super.key});
 
   // This widget is the root of your application.
   @override
@@ -26,8 +10,8 @@ class GlobalAppState extends State<App> {
     return LocaleBuilder(
       builder: (locale) => ValueListenableBuilder(
         // Listen to changes in the dark theme preference to refresh the UI
-        valueListenable: isDarkTheme,
-        builder: (context, isDarkTheme, child) {
+        valueListenable: settingsBox.listenable(keys: ['darkMode']),
+        builder: (context, box, child) {
           // Use .router for GoRouter
           return MaterialApp.router(
             color: const Color(0x00128C7E),
@@ -36,7 +20,9 @@ class GlobalAppState extends State<App> {
             // Appearance options
             theme: lightTheme,
             darkTheme: darkTheme,
-            themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
+            themeMode: box.get('darkMode', defaultValue: true)!
+                ? ThemeMode.dark
+                : ThemeMode.light,
 
             // Routing options
             routerConfig: router,
