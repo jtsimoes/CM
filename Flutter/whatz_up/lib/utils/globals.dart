@@ -1,5 +1,6 @@
 import "package:logger/logger.dart";
 
+export 'dart:io';
 export "package:flutter/foundation.dart";
 export "package:flutter/material.dart";
 export "package:flutter/services.dart";
@@ -15,6 +16,7 @@ export 'package:audioplayers/audioplayers.dart';
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:story_view/story_view.dart';
 export 'package:whatsapp_story_editor/whatsapp_story_editor.dart';
+export 'package:image_picker/image_picker.dart';
 
 export "package:whatz_up/utils/routes.dart";
 export "package:whatz_up/utils/themes.dart";
