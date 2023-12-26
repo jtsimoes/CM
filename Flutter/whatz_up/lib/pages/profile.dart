@@ -12,6 +12,18 @@ class ProfilePageState extends State<ProfilePage> {
   final TextEditingController bioController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
+  File? image;
+
+  Future pickAvatar(ImageSource source) async {
+    final image = await ImagePicker().pickImage(source: source);
+    if (image == null) return;
+
+    final imageTemporary = File(image.path);
+    setState(() {
+      this.image = imageTemporary;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -64,36 +76,173 @@ class ProfilePageState extends State<ProfilePage> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          Stack(
-            fit: StackFit.passthrough,
-            children: <Widget>[
-              CircleAvatar(
-                radius: 110,
-                child: ClipOval(
-                  child: Image.network(
-                    profileBox.get('avatar',
-                        defaultValue:
-                            'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png')!,
-                  ),
+          Center(
+            child: Stack(
+              children: <Widget>[
+                ClipOval(
+                  child: image != null
+                      ? Image.file(
+                          image!,
+                          width: 180,
+                          height: 180,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          profileBox.get('avatar',
+                              defaultValue: 'assets/media/avatar.png')!,
+                          width: 180,
+                          height: 180,
+                          fit: BoxFit.cover,
+                        ),
                 ),
-              ),
-              Positioned(
-                left: (MediaQuery.of(context).size.width / 2) + 45,
-                bottom: 25,
-                child: IconButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Theme.of(context).colorScheme.onPrimary)),
-                  icon: const Icon(Icons.camera_alt),
-                  iconSize: 18,
-                  onPressed: () {
-                    // Handle your button tap here
-                  },
+                Positioned(
+                  right: 0,
+                  top: 130,
+                  child: IconButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Theme.of(context).colorScheme.onPrimary)),
+                      icon: const Icon(Icons.camera_alt),
+                      iconSize: 18,
+                      onPressed: () => showModalBottomSheet(
+                            showDragHandle: true,
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 25, vertical: 0),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.28,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Profile avatar',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall),
+                                    const SizedBox(height: 25),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                  border: Border.all(
+                                                      color: Colors.grey)),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  pickAvatar(
+                                                      ImageSource.camera);
+                                                  context.pop();
+                                                },
+                                                icon: const Icon(
+                                                  Icons.camera_alt,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 12.0),
+                                            Text(
+                                              'Camera',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge!
+                                                  .copyWith(
+                                                    color: Colors.grey,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(width: 35),
+                                        Column(
+                                          children: [
+                                            Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                  border: Border.all(
+                                                      color: Colors.grey)),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  pickAvatar(
+                                                      ImageSource.gallery);
+                                                  context.pop();
+                                                },
+                                                icon: const Icon(
+                                                  Icons.insert_photo,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 12.0),
+                                            Text(
+                                              'Gallery',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge!
+                                                  .copyWith(
+                                                    color: Colors.grey,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(width: 35),
+                                        Column(
+                                          children: [
+                                            Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                  border: Border.all(
+                                                      color: Colors.grey)),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    image = null;
+                                                  });
+                                                  context.pop();
+                                                },
+                                                icon: const Icon(
+                                                  Icons.person_off,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 12.0),
+                                            Text(
+                                              'Default \navatar',
+                                              textAlign: TextAlign.center,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge!
+                                                  .copyWith(
+                                                    color: Colors.grey,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          )),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 10),
           Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _formKey,
