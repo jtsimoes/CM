@@ -21,6 +21,10 @@ void main() async {
   settingsBox = await Hive.openBox('settings');
   profileBox = await Hive.openBox('profile');
 
+  // Init notifications
+  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  NotificationService.initialize(flutterLocalNotificationsPlugin);
+
   // Starts the app
   runApp(const App());
 }

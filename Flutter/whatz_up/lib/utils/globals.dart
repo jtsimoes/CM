@@ -24,6 +24,7 @@ export "package:whatz_up/utils/themes.dart";
 
 export 'package:whatz_up/models/story.dart';
 export 'package:whatz_up/utils/boxes.dart';
+export 'package:whatz_up/utils/notifications.dart';
 
 final logger = Logger(
   printer: PrettyPrinter(
