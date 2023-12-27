@@ -42,8 +42,8 @@ class StoryViewDelegate extends StatefulWidget {
 }
 
 class StoryViewDelegateState extends State<StoryViewDelegate> {
-  final StoryController controller = StoryController();
-  List<StoryItem> storyItems = [];
+  // final StoryController controller = StoryController();
+  // List<StoryItem> storyItems = [];
 
   String? when = "";
 
@@ -52,37 +52,37 @@ class StoryViewDelegateState extends State<StoryViewDelegate> {
     super.initState();
     for (var story in widget.stories!) {
       if (story.mediaType == MediaType.text) {
-        storyItems.add(
-          StoryItem.text(
-            title: story.caption!,
-            backgroundColor: Colors.purpleAccent,
-            duration: Duration(
-              milliseconds: (story.duration! * 1000).toInt(),
-            ),
-          ),
-        );
+        // storyItems.add(
+        //   StoryItem.text(
+        //     title: story.caption!,
+        //     backgroundColor: Colors.purpleAccent,
+        //     duration: Duration(
+        //       milliseconds: (story.duration! * 1000).toInt(),
+        //     ),
+        //   ),
+        // );
       }
 
       if (story.mediaType == MediaType.image) {
-        storyItems.add(StoryItem.pageImage(
-          url: story.media!,
-          controller: controller,
-          caption: story.caption,
-          duration: Duration(
-            milliseconds: (story.duration! * 1000).toInt(),
-          ),
-        ));
+        // storyItems.add(StoryItem.pageImage(
+        //   url: story.media!,
+        //   controller: controller,
+        //   caption: story.caption,
+        //   duration: Duration(
+        //     milliseconds: (story.duration! * 1000).toInt(),
+        //   ),
+        // ));
       }
 
       if (story.mediaType == MediaType.video) {
-        storyItems.add(
-          StoryItem.pageVideo(
-            story.media!,
-            controller: controller,
-            duration: Duration(milliseconds: (story.duration! * 1000).toInt()),
-            caption: story.caption,
-          ),
-        );
+        // storyItems.add(
+        //   StoryItem.pageVideo(
+        //     story.media!,
+        //     controller: controller,
+        //     duration: Duration(milliseconds: (story.duration! * 1000).toInt()),
+        //     caption: story.caption,
+        //   ),
+        // );
       }
     }
 
@@ -127,7 +127,7 @@ class StoryViewDelegateState extends State<StoryViewDelegate> {
 
   @override
   void dispose() {
-    controller.dispose();
+    // controller.dispose();
     super.dispose();
   }
 
@@ -135,31 +135,31 @@ class StoryViewDelegateState extends State<StoryViewDelegate> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        StoryView(
-          storyItems: storyItems,
-          controller: controller,
-          onComplete: () {
-            context.pop();
-          },
-          onVerticalSwipeComplete: (v) {
-            if (v == Direction.down) {
-              context.pop();
-            }
-          },
-          onStoryShow: (storyItem) {
-            int pos = storyItems.indexOf(storyItem);
+        // StoryView(
+        //   storyItems: storyItems,
+        //   controller: controller,
+        //   onComplete: () {
+        //     context.pop();
+        //   },
+        //   onVerticalSwipeComplete: (v) {
+        //     if (v == Direction.down) {
+        //       context.pop();
+        //     }
+        //   },
+        //   onStoryShow: (storyItem) {
+        //     int pos = storyItems.indexOf(storyItem);
 
-            // the reason for doing setState only after the first
-            // position is becuase by the first iteration, the layout
-            // hasn't been laid yet, thus raising some exception
-            // (each child need to be laid exactly once)
-            if (pos > 0) {
-              setState(() {
-                when = widget.stories![pos].when;
-              });
-            }
-          },
-        ),
+        //     // the reason for doing setState only after the first
+        //     // position is becuase by the first iteration, the layout
+        //     // hasn't been laid yet, thus raising some exception
+        //     // (each child need to be laid exactly once)
+        //     if (pos > 0) {
+        //       setState(() {
+        //         when = widget.stories![pos].when;
+        //       });
+        //     }
+        //   },
+        // ),
         Container(
           padding: const EdgeInsets.only(
             top: 48,

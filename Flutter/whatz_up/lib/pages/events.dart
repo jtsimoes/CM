@@ -21,8 +21,7 @@ class EventsPage extends StatelessWidget {
             itemCount: snapshot.data!.length,
             itemBuilder: (BuildContext context, int index) {
               Event event = snapshot.data![index];
-              // Use event data to build your widgets
-              // ...
+              
               return Container(
                 margin: const EdgeInsets.all(20),
                 child: Card(
@@ -40,16 +39,16 @@ class EventsPage extends StatelessWidget {
                         .withOpacity(0.12),
                     highlightColor: Colors.transparent,
                     onTap: () {
-                      context.push("/event/$index");
+                      context.push("/event/$index", extra: event);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         // Display an image at the top of the card that fills the width of the card and has a height of 160 pixels
                         Hero(
-                          tag: 'hero-event$index',
+                          tag: 'hero-event${event.id}',
                           child: Image.network(
-                            "https://picsum.photos/id/158/550/320",
+                            event.image,
                             height: 160,
                             width: double.infinity,
                             fit: BoxFit.cover,
@@ -90,7 +89,7 @@ class EventsPage extends StatelessWidget {
                                   ElevatedButton(
                                     child: const Text('Explore'),
                                     onPressed: () {
-                                      context.push("/event/$index");
+                                      context.push("/event/$index", extra: event);
                                     },
                                   ),
                                   const SizedBox(height: 70),

@@ -4,6 +4,7 @@ class Event {
   String id;
   String name;
   String description;
+  String image;
   double price;
   double latitude;
   double longitude;
@@ -12,6 +13,7 @@ class Event {
     required this.id,
     required this.name,
     required this.description,
+    required this.image,
     required this.price,
     required this.latitude,
     required this.longitude,
@@ -19,11 +21,11 @@ class Event {
 
   static FirebaseFunctions functions = FirebaseFunctions.instance;
 
-  static Future<Event> create(String name, String description, double price,
-      double latitude, double longitude) async {
+  static Future<Event> create(String name, String description, String image, double price, double latitude, double longitude) async {
     Map<String, dynamic> newEvent = {
       'name': name,
       'description': description,
+      'image': image,
       'price': price,
       'latitude': latitude,
       'longitude': longitude
@@ -35,6 +37,7 @@ class Event {
       id: response['id'],
       name: response['name'],
       description: response['description'],
+      image: response['image'],
       price: response['price'],
       latitude: response['latitude'],
       longitude: response['longitude'],
@@ -49,6 +52,7 @@ class Event {
       id: response['id'],
       name: response['name'],
       description: response['description'],
+      image: response['image'],
       price: response['price'],
       latitude: response['latitude'],
       longitude: response['longitude'],
@@ -64,13 +68,35 @@ class Event {
               id: event['id'],
               name: event['name'],
               description: event['description'],
-              price: (event['price'] as int)
-                  .toDouble(), // TODO: Temporary fix, should be fixed in the database
-              latitude: (event['latitude'] as int)
-                  .toDouble(), // TODO: Temporary fix, should be fixed in the database
-              longitude: (event['longitude'] as int)
-                  .toDouble(), // TODO: Temporary fix, should be fixed in the database
+              image: event['image'],
+              price: event['price'] as double,
+              latitude: event['latitude'] as double,
+              longitude: event['longitude'] as double
             ))
         .toList();
+  }
+
+  static Event fromMap(Map<String, String> map) {
+    return Event(
+      id: map['id']!,
+      name: map['name']!,
+      description: map['description']!,
+      image: map['image']!,
+      price: double.parse(map['price']!),
+      latitude: double.parse(map['latitude']!),
+      longitude: double.parse(map['longitude']!),
+    );
+  }
+
+  Map<String, String> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'image': image,
+      'price': price.toString(),
+      'latitude': latitude.toString(),
+      'longitude': longitude.toString(),
+    };
   }
 }

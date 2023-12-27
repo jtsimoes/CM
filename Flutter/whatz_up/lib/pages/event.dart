@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:whatz_up/models/event.dart';
 import 'package:whatz_up/utils/globals.dart';
 
 import 'package:flutter_map/flutter_map.dart';
@@ -5,9 +8,9 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 
 class EventPage extends StatefulWidget {
-  final String? eventId;
+  final Event? event;
 
-  const EventPage({Key? key, this.eventId}) : super(key: key);
+  const EventPage({Key? key, this.event}) : super(key: key);
 
   @override
   EventPageState createState() => EventPageState();
@@ -23,6 +26,8 @@ class EventPageState extends State<EventPage> {
 
   @override
   Widget build(BuildContext context) {
+    Event event = widget.event!;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -39,7 +44,7 @@ class EventPageState extends State<EventPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: Text("Event #${widget.eventId}"),
+              child: Text(event.name),
             ),
           ],
         ),
@@ -47,7 +52,7 @@ class EventPageState extends State<EventPage> {
       body: ListView(
         children: [
           Hero(
-            tag: 'hero-event${widget.eventId}',
+            tag: 'hero-event${event.id}',
             child: DecoratedBox(
               position: DecorationPosition.foreground,
               decoration: BoxDecoration(
@@ -61,14 +66,14 @@ class EventPageState extends State<EventPage> {
                 ),
               ),
               child: Image.network(
-                "https://picsum.photos/id/158/550/320",
+                widget.event!.image,
                 width: double.infinity,
                 fit: BoxFit.cover,
                 alignment: Alignment.bottomCenter,
               ),
             ),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 30),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -84,7 +89,7 @@ class EventPageState extends State<EventPage> {
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
               Text(
-                  "Bacon ipsum dolor amet bacon t-bone chicken chuck hamburger frankfurter pork loin tongue venison filet mignon. Filet mignon swine kevin spare ribs fatback shank sausage cow biltong pork loin meatball picanha leberkas ground round.",
+                  event.description,
                   textAlign: TextAlign.justify,
                   style: TextStyle(color: Colors.white70)),
               SizedBox(height: 15),
@@ -92,14 +97,7 @@ class EventPageState extends State<EventPage> {
                 "Price",
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
-              Text("69 €", style: TextStyle(color: Colors.white70)),
-              SizedBox(height: 15),
-              Text(
-                "Idk",
-                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-              ),
-              Text("Value goes here...",
-                  style: TextStyle(color: Colors.white70)),
+              Text(event.price.toStringAsFixed(2) + " €", style: TextStyle(color: Colors.white70)),
               SizedBox(height: 15),
               Text(
                 "Location",

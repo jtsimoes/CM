@@ -1,4 +1,5 @@
 import "package:go_router/go_router.dart";
+import "package:whatz_up/models/event.dart";
 import "package:whatz_up/pages/chat.dart";
 import "package:whatz_up/pages/home.dart";
 import "package:whatz_up/pages/stories.dart";
@@ -30,7 +31,7 @@ final router = GoRouter(
       name: "event",
       path: "/event/:eventId",
       builder: (context, state) =>
-          EventPage(eventId: state.pathParameters['eventId']),
+          EventPage(event: state.extra as Event),
     ),
     GoRoute(
       name: "profile",
