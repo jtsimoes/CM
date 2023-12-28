@@ -1,0 +1,16 @@
+{
+    "settings_title": "Настройки",
+    "settings_account": "Аккаунт",
+    "settings_account_description": "Уведомления о безопасности, двухэтапная верификация, изменение номера",
+    "settings_privacy": "Конфиденциальность",
+    "settings_privacy_description": "Последний визит, блокировка контактов, исчезающие сообщения",
+    "settings_language": "Язык",
+    "settings_wallpaper": "Обои",
+    "settings_notifications": "Уведомления",
+    "settings_font_size": "Размер шрифта",
+    "settings_font_size_medium": "Средний",
+    "settings_dark_mode": "Темный режим",
+    "settings_chat_backup": "Резервное копирование чата",
+    "settings_help": "Помощь",
+    "settings_about": "О WhatzUp"
+}

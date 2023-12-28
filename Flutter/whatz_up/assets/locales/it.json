@@ -1,0 +1,16 @@
+{
+    "settings_title": "Impostazioni",
+    "settings_account": "Account",
+    "settings_account_description": "Notifiche di sicurezza, verifica in due passaggi, cambio numero",
+    "settings_privacy": "Privacy",
+    "settings_privacy_description": "Ultimo accesso, blocca contatti, messaggi che scompaiono",
+    "settings_language": "Lingua",
+    "settings_wallpaper": "Sfondo",
+    "settings_notifications": "Notifiche",
+    "settings_font_size": "Dimensione del carattere",
+    "settings_font_size_medium": "Medio",
+    "settings_dark_mode": "Modalità scura",
+    "settings_chat_backup": "Backup della chat",
+    "settings_help": "Aiuto",
+    "settings_about": "Informazioni su WhatzUp"
+}

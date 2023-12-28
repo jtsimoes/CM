@@ -1,0 +1,16 @@
+{
+    "settings_title": "設定",
+    "settings_account": "アカウント",
+    "settings_account_description": "セキュリティ通知、二段階認証、電話番号の変更",
+    "settings_privacy": "プライバシー",
+    "settings_privacy_description": "最終アクセス時刻、連絡先のブロック、消えるメッセージ",
+    "settings_language": "言語",
+    "settings_wallpaper": "壁紙",
+    "settings_notifications": "通知",
+    "settings_font_size": "フォントサイズ",
+    "settings_font_size_medium": "中",
+    "settings_dark_mode": "ダークモード",
+    "settings_chat_backup": "チャットのバックアップ",
+    "settings_help": "ヘルプ",
+    "settings_about": "WhatzUpについて"
+}

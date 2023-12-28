@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Init localization
-  await Locales.init(['en', 'pt']);
+  await Locales.init(['en', 'pt', 'es', 'fr', 'ru', 'ja', 'de', 'it', 'zh']);
 
   // Init Firebase
   await Firebase.initializeApp(

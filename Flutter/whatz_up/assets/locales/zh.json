@@ -1,0 +1,16 @@
+{
+    "settings_title": "设置",
+    "settings_account": "账户",
+    "settings_account_description": "安全通知，两步验证，更改号码",
+    "settings_privacy": "隐私",
+    "settings_privacy_description": "最后在线时间，屏蔽联系人，消失的消息",
+    "settings_language": "语言",
+    "settings_wallpaper": "壁纸",
+    "settings_notifications": "通知",
+    "settings_font_size": "字体大小",
+    "settings_font_size_medium": "中等",
+    "settings_dark_mode": "深色模式",
+    "settings_chat_backup": "聊天备份",
+    "settings_help": "帮助",
+    "settings_about": "关于 WhatzUp"
+}

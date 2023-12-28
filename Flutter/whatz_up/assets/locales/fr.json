@@ -1,0 +1,16 @@
+{
+    "settings_title": "Paramètres",
+    "settings_account": "Compte",
+    "settings_account_description": "Notifications de sécurité, vérification en deux étapes, changer le numéro",
+    "settings_privacy": "Confidentialité",
+    "settings_privacy_description": "Vu pour la dernière fois, bloquer les contacts, messages éphémères",
+    "settings_language": "Langue",
+    "settings_wallpaper": "Fond d'écran",
+    "settings_notifications": "Notifications",
+    "settings_font_size": "Taille de la police",
+    "settings_font_size_medium": "Moyen",
+    "settings_dark_mode": "Mode sombre",
+    "settings_chat_backup": "Sauvegarde des discussions",
+    "settings_help": "Aide",
+    "settings_about": "À propos de WhatzUp"
+}
