@@ -50,26 +50,202 @@ class SettingsPageState extends State<SettingsPage> {
             onTap: () {},
           ),
           ListTile(
-            leading: const Icon(Icons.lock),
-            title: const LocaleText('settings_privacy'),
-            subtitle: const LocaleText(
-              'settings_privacy_description',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {},
-          ),
-          ListTile(
             leading: const Icon(Icons.language),
             title: const LocaleText('settings_language'),
-            subtitle: (Locales.currentLocale(context).toString() == 'en')
-                ? const Text("English (United States)")
-                : const Text("Português (Portugal)"),
+            subtitle: switch (Locales.currentLocale(context).toString()) {
+              'en' => const Text("English (United States)"),
+              'pt' => const Text("Português (Portugal)"),
+              'es' => const Text("Español (España)"),
+              'fr' => const Text("Français (France)"),
+              'it' => const Text("Italiano (Italia)"),
+              'de' => const Text("Deutsch (Deutschland)"),
+              'ru' => const Text("Русский (Россия)"),
+              'ja' => const Text("日本語 (日本)"),
+              'zh' => const Text("中文 (中国)"),
+              _ => null,
+            },
             onTap: () {
-              (Locales.currentLocale(context).toString() == 'en')
-                  ? Locales.change(context, 'pt')
-                  : Locales.change(context, 'en');
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return SimpleDialog(
+                    title: const Text('Select language'),
+                    children: <Widget>[
+                      SimpleDialogOption(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 15),
+                        onPressed: () {
+                          Locales.change(context, 'en');
+                          context.pop();
+                        },
+                        child: Row(
+                          children: [
+                            Radio<String>(
+                              value: 'en',
+                              groupValue:
+                                  Locales.currentLocale(context).toString(),
+                              onChanged: null,
+                            ),
+                            const Text('English (United States)'),
+                          ],
+                        ),
+                      ),
+                      SimpleDialogOption(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 15),
+                        onPressed: () {
+                          Locales.change(context, 'pt');
+                          context.pop();
+                        },
+                        child: Row(
+                          children: [
+                            Radio<String>(
+                              value: 'pt',
+                              groupValue:
+                                  Locales.currentLocale(context).toString(),
+                              onChanged: null,
+                            ),
+                            const Text('Português (Portugal)'),
+                          ],
+                        ),
+                      ),
+                      SimpleDialogOption(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 15),
+                        onPressed: () {
+                          Locales.change(context, 'es');
+                          context.pop();
+                        },
+                        child: Row(
+                          children: [
+                            Radio<String>(
+                              value: 'es',
+                              groupValue:
+                                  Locales.currentLocale(context).toString(),
+                              onChanged: null,
+                            ),
+                            const Text('Español (España)'),
+                          ],
+                        ),
+                      ),
+                      SimpleDialogOption(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 15),
+                        onPressed: () {
+                          Locales.change(context, 'fr');
+                          context.pop();
+                        },
+                        child: Row(
+                          children: [
+                            Radio<String>(
+                              value: 'fr',
+                              groupValue:
+                                  Locales.currentLocale(context).toString(),
+                              onChanged: null,
+                            ),
+                            const Text('Français (France)'),
+                          ],
+                        ),
+                      ),
+                      SimpleDialogOption(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 15),
+                        onPressed: () {
+                          Locales.change(context, 'it');
+                          context.pop();
+                        },
+                        child: Row(
+                          children: [
+                            Radio<String>(
+                              value: 'it',
+                              groupValue:
+                                  Locales.currentLocale(context).toString(),
+                              onChanged: null,
+                            ),
+                            const Text('Italiano (Italia)'),
+                          ],
+                        ),
+                      ),
+                      SimpleDialogOption(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 15),
+                        onPressed: () {
+                          Locales.change(context, 'de');
+                          context.pop();
+                        },
+                        child: Row(
+                          children: [
+                            Radio<String>(
+                              value: 'de',
+                              groupValue:
+                                  Locales.currentLocale(context).toString(),
+                              onChanged: null,
+                            ),
+                            const Text('Deutsch (Deutschland)'),
+                          ],
+                        ),
+                      ),
+                      SimpleDialogOption(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 15),
+                        onPressed: () {
+                          Locales.change(context, 'ru');
+                          context.pop();
+                        },
+                        child: Row(
+                          children: [
+                            Radio<String>(
+                              value: 'ru',
+                              groupValue:
+                                  Locales.currentLocale(context).toString(),
+                              onChanged: null,
+                            ),
+                            const Text('Русский (Россия)'),
+                          ],
+                        ),
+                      ),
+                      SimpleDialogOption(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 15),
+                        onPressed: () {
+                          Locales.change(context, 'ja');
+                          context.pop();
+                        },
+                        child: Row(
+                          children: [
+                            Radio<String>(
+                              value: 'ja',
+                              groupValue:
+                                  Locales.currentLocale(context).toString(),
+                              onChanged: null,
+                            ),
+                            const Text('日本語 (日本)'),
+                          ],
+                        ),
+                      ),
+                      SimpleDialogOption(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 15),
+                        onPressed: () {
+                          Locales.change(context, 'zh');
+                          context.pop();
+                        },
+                        child: Row(
+                          children: [
+                            Radio<String>(
+                              value: 'zh',
+                              groupValue:
+                                  Locales.currentLocale(context).toString(),
+                              onChanged: null,
+                            ),
+                            const Text('中文 (中国)'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
           ListTile(
@@ -130,12 +306,6 @@ class SettingsPageState extends State<SettingsPage> {
                 settingsBox.put('notifications', value);
               });
             },
-          ),
-          ListTile(
-            leading: const Icon(Icons.font_download_outlined),
-            title: const LocaleText('settings_font_size'),
-            subtitle: const LocaleText('settings_font_size_medium'),
-            onTap: () {},
           ),
           SwitchListTile(
             secondary: const Icon(Icons.dark_mode),
