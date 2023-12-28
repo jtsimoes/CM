@@ -75,7 +75,51 @@ class SettingsPageState extends State<SettingsPage> {
           ListTile(
             leading: const Icon(Icons.wallpaper),
             title: const LocaleText('settings_wallpaper'),
-            onTap: () {},
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => Dialog.fullscreen(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Select wallpaper',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      textAlign: TextAlign.start,
+                    ),
+                    const SizedBox(height: 20),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        WallpaperOption(wallpaper: 'none'),
+                        WallpaperOption(wallpaper: 'clouds'),
+                        WallpaperOption(wallpaper: 'doodles'),
+                        WallpaperOption(wallpaper: 'flutter'),
+                      ],
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        WallpaperOption(wallpaper: 'love'),
+                        WallpaperOption(wallpaper: 'space'),
+                        WallpaperOption(wallpaper: 'water'),
+                        WallpaperOption(wallpaper: 'wood'),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      child: const Text('Back'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
           SwitchListTile(
             secondary: const Icon(Icons.notifications),
@@ -143,6 +187,62 @@ class SettingsPageState extends State<SettingsPage> {
               );
             },
           )
+        ],
+      ),
+    );
+  }
+}
+
+class WallpaperOption extends StatelessWidget {
+  final String wallpaper;
+
+  const WallpaperOption({
+    Key? key,
+    required this.wallpaper,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    bool current =
+        profileBox.get('wallpaper', defaultValue: 'doodles') == wallpaper;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Card(
+            elevation: 10,
+            shape: (current)
+                ? RoundedRectangleBorder(
+                    side: BorderSide(
+                        color: Theme.of(context).colorScheme.tertiary,
+                        width: 2),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  )
+                : null,
+            clipBehavior: Clip.hardEdge,
+            child: InkWell(
+              onTap: () {
+                profileBox.put('wallpaper', wallpaper);
+                context.pop();
+              },
+              child: Ink.image(
+                width: 100,
+                height: 200,
+                image: AssetImage('assets/wallpapers/$wallpaper.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(height: 5),
+          if (current)
+            Text(
+              '${wallpaper[0].toUpperCase()}${wallpaper.substring(1)} \n(current)',
+              textAlign: TextAlign.center,
+            )
+          else
+            Text(
+              '${wallpaper[0].toUpperCase()}${wallpaper.substring(1)}',
+            ),
         ],
       ),
     );

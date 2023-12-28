@@ -119,146 +119,156 @@ class ChatPageState extends State<ChatPage> {
           )
         ],
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              children: <Widget>[
-                DateChip(
-                  date: DateTime(now.year, now.month, now.day - 2),
-                ),
-                BubbleNormalImage(
-                  id: 'id001',
-                  image: _image(),
-                  color: const Color(0xFF015146),
-                  tail: false,
-                  seen: true,
-                ),
-                BubbleNormalAudio(
-                  color: const Color(0xFF015146),
-                  duration: duration.inSeconds.toDouble(),
-                  position: position.inSeconds.toDouble(),
-                  isPlaying: isPlaying,
-                  isLoading: isLoading,
-                  isPause: isPause,
-                  onSeekChanged: _changeSeek,
-                  onPlayPauseButtonClick: _playAudio,
-                  tail: false,
-                  seen: true,
-                  textStyle: const TextStyle(color: Colors.white, fontSize: 10),
-                ),
-                DateChip(
-                  date: DateTime(now.year, now.month, now.day - 1),
-                ),
-                const BubbleSpecialTwo(
-                  text: 'bubble special one with tail',
-                  color: Color(0xFF015146),
-                  tail: false,
-                  sent: true,
-                  delivered: true,
-                  seen: true,
-                  textStyle: TextStyle(color: Colors.white),
-                ),
-                const BubbleSpecialOne(
-                  text: 'bubble special one without tail',
-                  isSender: false,
-                  tail: false,
-                  color: Color(0xFF36353a),
-                  textStyle: TextStyle(
-                    color: Colors.white,
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                opacity: 0.5,
+                image: AssetImage(
+                    "assets/wallpapers/${profileBox.get('wallpaper', defaultValue: 'doodles')}.jpg"),
+                fit: BoxFit.cover)),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: <Widget>[
+                  DateChip(
+                    date: DateTime(now.year, now.month, now.day - 2),
                   ),
-                ),
-                const BubbleSpecialOne(
-                  text: 'Message seen',
-                  tail: false,
-                  color: Color(0xFF015146),
-                  sent: true,
-                  delivered: true,
-                  seen: true,
-                  textStyle: TextStyle(color: Colors.white),
-                ),
-                const BubbleSpecialOne(
-                  text: 'Message delivered',
-                  tail: false,
-                  color: Color(0xFF015146),
-                  sent: true,
-                  delivered: true,
-                  seen: false,
-                  textStyle: TextStyle(color: Colors.white),
-                ),
-                const BubbleSpecialOne(
-                  text: 'Message sent',
-                  tail: false,
-                  color: Color(0xFF015146),
-                  sent: true,
-                  delivered: false,
-                  seen: false,
-                  textStyle: TextStyle(color: Colors.white),
-                ),
-                DateChip(
-                  date: now,
-                ),
-                const BubbleSpecialOne(
-                  text: 'Another one',
-                  tail: false,
-                  color: Color(0xFF015146),
-                  sent: true,
-                  delivered: false,
-                  seen: false,
-                  textStyle: TextStyle(color: Colors.white),
-                ),
-                const BubbleSpecialOne(
-                  text: 'And another one',
-                  tail: false,
-                  color: Color(0xFF015146),
-                  sent: true,
-                  delivered: false,
-                  seen: false,
-                  textStyle: TextStyle(color: Colors.white),
-                ),
-                const BubbleSpecialOne(
-                  text: 'DJ Khaled',
-                  tail: false,
-                  color: Color(0xFF36353a),
-                  isSender: false,
-                  textStyle: TextStyle(color: Colors.white),
-                ),
-                const SizedBox(
-                  height: 80,
-                )
-              ],
-            ),
-          ),
-          MessageBar(
-            messageBarColor: Colors.black,
-            sendButtonColor: Colors.greenAccent,
-            messageBarHintStyle: const TextStyle(color: Colors.grey),
-            messageBarHitText: ' Message',
-            onSend: (_) => {print(_), _scrollToBottom()},
-            actions: [
-              InkWell(
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 24,
-                ),
-                onTap: () {},
+                  BubbleNormalImage(
+                    id: 'id001',
+                    image: _image(),
+                    color: const Color(0xFF015146),
+                    tail: false,
+                    seen: true,
+                  ),
+                  BubbleNormalAudio(
+                    color: const Color(0xFF015146),
+                    duration: duration.inSeconds.toDouble(),
+                    position: position.inSeconds.toDouble(),
+                    isPlaying: isPlaying,
+                    isLoading: isLoading,
+                    isPause: isPause,
+                    onSeekChanged: _changeSeek,
+                    onPlayPauseButtonClick: _playAudio,
+                    tail: false,
+                    seen: true,
+                    textStyle:
+                        const TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                  DateChip(
+                    date: DateTime(now.year, now.month, now.day - 1),
+                  ),
+                  const BubbleSpecialTwo(
+                    text: 'bubble special one with tail',
+                    color: Color(0xFF015146),
+                    tail: false,
+                    sent: true,
+                    delivered: true,
+                    seen: true,
+                    textStyle: TextStyle(color: Colors.white),
+                  ),
+                  const BubbleSpecialOne(
+                    text: 'bubble special one without tail',
+                    isSender: false,
+                    tail: false,
+                    color: Color(0xFF36353a),
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  const BubbleSpecialOne(
+                    text: 'Message seen',
+                    tail: false,
+                    color: Color(0xFF015146),
+                    sent: true,
+                    delivered: true,
+                    seen: true,
+                    textStyle: TextStyle(color: Colors.white),
+                  ),
+                  const BubbleSpecialOne(
+                    text: 'Message delivered',
+                    tail: false,
+                    color: Color(0xFF015146),
+                    sent: true,
+                    delivered: true,
+                    seen: false,
+                    textStyle: TextStyle(color: Colors.white),
+                  ),
+                  const BubbleSpecialOne(
+                    text: 'Message sent',
+                    tail: false,
+                    color: Color(0xFF015146),
+                    sent: true,
+                    delivered: false,
+                    seen: false,
+                    textStyle: TextStyle(color: Colors.white),
+                  ),
+                  DateChip(
+                    date: now,
+                  ),
+                  const BubbleSpecialOne(
+                    text: 'Another one',
+                    tail: false,
+                    color: Color(0xFF015146),
+                    sent: true,
+                    delivered: false,
+                    seen: false,
+                    textStyle: TextStyle(color: Colors.white),
+                  ),
+                  const BubbleSpecialOne(
+                    text: 'And another one',
+                    tail: false,
+                    color: Color(0xFF015146),
+                    sent: true,
+                    delivered: false,
+                    seen: false,
+                    textStyle: TextStyle(color: Colors.white),
+                  ),
+                  const BubbleSpecialOne(
+                    text: 'DJ Khaled',
+                    tail: false,
+                    color: Color(0xFF36353a),
+                    isSender: false,
+                    textStyle: TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 80,
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: InkWell(
+            ),
+            MessageBar(
+              messageBarColor: Colors.black,
+              sendButtonColor: Colors.greenAccent,
+              messageBarHintStyle: const TextStyle(color: Colors.grey),
+              messageBarHitText: ' Message',
+              onSend: (_) => {print(_), _scrollToBottom()},
+              actions: [
+                InkWell(
                   child: const Icon(
-                    Icons.emoji_emotions,
+                    Icons.add,
                     color: Colors.white,
                     size: 24,
                   ),
                   onTap: () {},
                 ),
-              ),
-            ],
-          ),
-        ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: InkWell(
+                    child: const Icon(
+                      Icons.emoji_emotions,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                    onTap: () {},
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
