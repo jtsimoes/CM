@@ -1,14 +1,49 @@
+import 'dart:async';
+
 import 'package:whatz_up/utils/globals.dart';
 
-class CallPage extends StatelessWidget {
+class CallPage extends StatefulWidget {
   final String? userId;
 
   const CallPage({Key? key, this.userId}) : super(key: key);
 
   @override
+  CallPageState createState() => CallPageState();
+}
+
+class CallPageState extends State<CallPage> {
+  String duration = 'Calling...';
+  Stopwatch stopwatch = Stopwatch();
+  Timer? timer;
+
+  void showCallDuration() {
+    if (stopwatch.isRunning) {
+      setState(() {
+        duration = stopwatch.elapsed.toString().split('.')[0];
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    stopwatch.start();
+    timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer t) => showCallDuration(),
+    );
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     NotificationService.showOngoingCallNotification(
-        title: userId!,
+        title: widget.userId!,
         body: "Ongoing call",
         fln: flutterLocalNotificationsPlugin);
     return Scaffold(
@@ -50,13 +85,13 @@ class CallPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 25, 0, 15),
                       child: Text(
-                        userId!,
+                        widget.userId!,
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     ),
-                    const Text(
-                      'Calling...',
-                      style: TextStyle(color: Colors.grey, fontSize: 16),
+                    Text(
+                      duration,
+                      style: const TextStyle(color: Colors.grey, fontSize: 16),
                     ),
                   ],
                 ),
