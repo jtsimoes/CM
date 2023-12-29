@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
       initialIndex: 1,
       child: Scaffold(
         appBar: AppBarWithSearchSwitch(
-          onChanged: (value) => print(value),
+          onChanged: (value) => context.read<SearchBloc>().updateSearch(value),
           searchInputDecoration: InputDecoration(
             hintText: 'Type to search...',
             filled: false,

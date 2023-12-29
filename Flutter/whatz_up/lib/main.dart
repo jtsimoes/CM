@@ -26,5 +26,10 @@ void main() async {
   NotificationService.initialize(flutterLocalNotificationsPlugin);
 
   // Starts the app
-  runApp(const App());
+  runApp(
+    BlocProvider(
+      create: (context) => SearchBloc(),
+      child: const App(),
+    ),
+  );
 }

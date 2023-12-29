@@ -1,4 +1,5 @@
 import "package:logger/logger.dart";
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 export 'dart:io';
 export "package:flutter/foundation.dart";
@@ -12,6 +13,7 @@ export 'package:flutter_locales/flutter_locales.dart';
 export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 export 'package:shake_gesture/shake_gesture.dart';
 export 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
+export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:chat_bubbles/chat_bubbles.dart';
 export "package:url_strategy/url_strategy.dart";
 export 'package:audioplayers/audioplayers.dart';
@@ -34,3 +36,11 @@ final logger = Logger(
     printTime: true,
   ),
 );
+
+class SearchBloc extends Cubit<String> {
+  SearchBloc() : super('');
+
+  void updateSearch(String search) {
+    emit(search);
+  }
+}
