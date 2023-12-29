@@ -96,7 +96,7 @@ class HomePage extends StatelessWidget {
                             ),
                         ]),
                   ),
-                  const Tab(text: 'Updates'),
+                  const Tab(text: 'Status'),
                   const Tab(text: 'Calls'),
                 ],
               ),
