@@ -1,5 +1,7 @@
 import 'package:whatz_up/utils/globals.dart';
 
+import 'package:whatz_up/utils/saved_image_view.dart';
+
 class Status {
   final String userInitials;
   final String userName;
@@ -82,7 +84,19 @@ class StatusPage extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => const WhatsappStoryEditor()),
-          );
+          ).then((whatsappStoryEditorResult) {
+            if (whatsappStoryEditorResult != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SavedImageView(
+                    image: whatsappStoryEditorResult.image,
+                    caption: whatsappStoryEditorResult.caption,
+                  ),
+                ),
+              );
+            }
+          });
         },
       ),
     );
