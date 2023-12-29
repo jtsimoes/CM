@@ -1,5 +1,7 @@
 import 'package:whatz_up/utils/globals.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 List<List<String>> callHistory = [
   // Avatar | Phone number | Timestamp | Incoming/outgoing call | Voice/video call]
   ['A', '(+351) 999 888 777', 'January 5, 13:53', 'in', 'voice'],
@@ -48,9 +50,13 @@ class CallsPage extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_call),
-        onPressed: () {
-          // TODO: Navigate to new call screen
+        tooltip: 'Dial number',
+        child: const Icon(Icons.dialpad),
+        onPressed: () async {
+          final Uri launchUri = Uri(scheme: 'tel');
+          if (!await launchUrl(launchUri)) {
+            throw Exception('Could not launch phone dialer app');
+          }
         },
       ),
     );
