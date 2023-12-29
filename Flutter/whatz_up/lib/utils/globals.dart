@@ -1,6 +1,3 @@
-import "package:logger/logger.dart";
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 export 'dart:io';
 export "package:flutter/foundation.dart";
 export "package:flutter/material.dart";
@@ -29,13 +26,7 @@ export 'package:whatz_up/models/story.dart';
 export 'package:whatz_up/utils/boxes.dart';
 export 'package:whatz_up/utils/notifications.dart';
 
-final logger = Logger(
-  printer: PrettyPrinter(
-    methodCount: 0,
-    errorMethodCount: 0,
-    printTime: true,
-  ),
-);
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchBloc extends Cubit<String> {
   SearchBloc() : super('');
