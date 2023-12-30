@@ -21,7 +21,8 @@ class Event {
 
   static FirebaseFunctions functions = FirebaseFunctions.instance;
 
-  static Future<Event> create(String name, String description, String image, double price, double latitude, double longitude) async {
+  static Future<Event> create(String name, String description, String image,
+      double price, double latitude, double longitude) async {
     Map<String, dynamic> newEvent = {
       'name': name,
       'description': description,
@@ -69,9 +70,9 @@ class Event {
               name: event['name'],
               description: event['description'],
               image: event['image'],
-              price: event['price'] as double,
-              latitude: event['latitude'] as double,
-              longitude: event['longitude'] as double
+              price: (event['price'] as num).toDouble(),
+              latitude: (event['latitude'] as num).toDouble(),
+              longitude: (event['longitude'] as num).toDouble(),
             ))
         .toList();
   }
