@@ -6,119 +6,135 @@ class EventsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchBloc, String>(
-      builder: (context, search) {
-        return FutureBuilder<List<Event>>(
-          future: Event.find(),
-          builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              ); // Show a loading indicator while waiting
-            } else if (snapshot.hasError) {
-              return Text(
-                  'Error: ${snapshot.error}'); // Show error message if something went wrong
-            } else {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Event event = snapshot.data![index];
+    return BlocBuilder<SearchBloc, String>(builder: (context, search) {
+      return FutureBuilder<List<Event>>(
+        future: Event.find(),
+        builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Text(
+                'Error: ${snapshot.error}'); // TODO: Show error message if something went wrong
+          } else {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                Event event = snapshot.data![index];
 
-                  String search = context.read<SearchBloc>().state;
+                String search = context.read<SearchBloc>().state;
 
-                  if (search.isNotEmpty &&
+                if (search.isNotEmpty &&
                     !(event.name.toLowerCase().contains(search.toLowerCase()) ||
-                      event.description.toLowerCase().contains(search.toLowerCase()))) {
-                    return Container();
-                  }
-                  
-                  return Container(
-                    margin: const EdgeInsets.all(20),
-                    child: Card(
-                      // Set the shape of the card using a rounded rectangle border with a 8 pixel radius
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      // Set the clip behavior of the card
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      // Define the child widgets of the card
-                      child: InkWell(
-                        splashColor: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withOpacity(0.12),
-                        highlightColor: Colors.transparent,
-                        onTap: () {
-                          context.push("/event/$index", extra: event);
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            // Display an image at the top of the card that fills the width of the card and has a height of 160 pixels
-                            Hero(
-                              tag: 'hero-event${event.id}',
-                              child: Image.network(
-                                event.image,
-                                height: 160,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                alignment: Alignment.bottomCenter,
-                              ),
+                        event.description
+                            .toLowerCase()
+                            .contains(search.toLowerCase()))) {
+                  return Container();
+                }
+
+                return Container(
+                  margin: const EdgeInsets.all(20),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: InkWell(
+                      splashColor: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.12),
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        context.push("/event/$index", extra: event);
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Hero(
+                            tag: 'hero-event${event.id}',
+                            child: Image.network(
+                              event.image,
+                              height: 160,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                              alignment: Alignment.bottomCenter,
+                              errorBuilder: (BuildContext context,
+                                  Object exception, StackTrace? stackTrace) {
+                                return const SizedBox(height: 10);
+                              },
                             ),
-                            // Add a container with padding that contains the card's title, text, and buttons
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  // Display the card's title using a font size of 24 and a dark grey color
-                                  Text(
-                                    event.name,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                    ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  event.name,
+                                  style: const TextStyle(
+                                    fontSize: 20,
                                   ),
-                                  // Add a space between the title and the text
-                                  const SizedBox(height: 8),
-                                  // Display the card's text using a font size of 15 and a light grey color
-                                  Text(
-                                    event.description,
-                                    style: const TextStyle(
-                                      color: Colors.white70,
-                                    ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  event.description,
+                                  style: const TextStyle(
+                                    color: Colors.white70,
                                   ),
-                                  // Add a row with two buttons spaced apart and aligned to the right side of the card
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      ElevatedButton(
-                                        child: const Text('Buy tickets'),
-                                        onPressed: () {/* ... */},
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.justify,
+                                ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Theme.of(context)
+                                                    .colorScheme
+                                                    .primaryContainer),
                                       ),
-                                      const SizedBox(width: 10),
-                                      ElevatedButton(
-                                        child: const Text('Explore'),
-                                        onPressed: () {
-                                          context.push("/event/$index", extra: event);
-                                        },
+                                      child: const Text('Add to calendar'),
+                                      onPressed: () {
+                                        print('TODO: Add to calendar');
+                                      },
+                                    ),
+                                    ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Theme.of(context)
+                                                    .colorScheme
+                                                    .primaryContainer),
                                       ),
-                                      const SizedBox(height: 70),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                      child: const Text('Explore'),
+                                      onPressed: () {
+                                        context.push("/event/$index",
+                                            extra: event);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  );
-                },
-              );
-            }
-          },
-        );
-      }
-    );
+                  ),
+                );
+              },
+            );
+          }
+        },
+      );
+    });
   }
 }

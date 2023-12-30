@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:whatz_up/models/event.dart';
 import 'package:whatz_up/utils/globals.dart';
 
@@ -70,36 +68,41 @@ class EventPageState extends State<EventPage> {
                 width: double.infinity,
                 fit: BoxFit.cover,
                 alignment: Alignment.bottomCenter,
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  return const SizedBox(height: 0);
+                },
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(height: 30),
-              Text(
+              const SizedBox(height: 30),
+              const Text(
                 "Date",
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
-              Text("10/01/2024 17:00", style: TextStyle(color: Colors.white70)),
-              SizedBox(height: 15),
-              Text(
+              const Text("10/01/2024 17:00",
+                  style: TextStyle(color: Colors.white70)),
+              const SizedBox(height: 15),
+              const Text(
                 "Description",
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
-              Text(
-                  event.description,
+              Text(event.description,
                   textAlign: TextAlign.justify,
-                  style: TextStyle(color: Colors.white70)),
-              SizedBox(height: 15),
-              Text(
+                  style: const TextStyle(color: Colors.white70)),
+              const SizedBox(height: 15),
+              const Text(
                 "Price",
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
-              Text(event.price.toStringAsFixed(2) + " €", style: TextStyle(color: Colors.white70)),
-              SizedBox(height: 15),
-              Text(
+              Text("${event.price.toStringAsFixed(2)} €",
+                  style: const TextStyle(color: Colors.white70)),
+              const SizedBox(height: 15),
+              const Text(
                 "Location",
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
@@ -139,6 +142,7 @@ class EventPageState extends State<EventPage> {
                     right: 10,
                     bottom: 10,
                     child: FloatingActionButton(
+                      tooltip: 'My location',
                       onPressed: () {
                         // Follow the location marker on the map when location updated until user interact with the map.
                         setState(
