@@ -1,6 +1,8 @@
 import 'package:whatz_up/models/event.dart';
 import 'package:whatz_up/utils/globals.dart';
 
+import 'package:add_2_calendar/add_2_calendar.dart' as calendar;
+
 class EventsPage extends StatelessWidget {
   const EventsPage({Key? key}) : super(key: key);
 
@@ -34,7 +36,7 @@ class EventsPage extends StatelessWidget {
                 }
 
                 return Container(
-                  margin: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(15),
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -102,7 +104,22 @@ class EventsPage extends StatelessWidget {
                                       ),
                                       child: const Text('Add to calendar'),
                                       onPressed: () {
-                                        print('TODO: Add to calendar');
+                                        calendar.Add2Calendar.addEvent2Cal(
+                                          calendar.Event(
+                                            title: event.name,
+                                            description: event.description,
+                                            location:
+                                                '${event.latitude} , ${event.longitude}',
+                                            startDate: DateTime.now(),
+                                            endDate: DateTime.now().add(
+                                              const Duration(
+                                                days: 1,
+                                                hours: 2,
+                                                minutes: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                       },
                                     ),
                                     ElevatedButton(

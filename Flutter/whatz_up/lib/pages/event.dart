@@ -4,6 +4,7 @@ import 'package:whatz_up/utils/globals.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:add_2_calendar/add_2_calendar.dart' as calendar;
 
 class EventPage extends StatefulWidget {
   final Event? event;
@@ -110,7 +111,7 @@ class EventPageState extends State<EventPage> {
             ]),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(30, 8, 30, 30),
+            padding: const EdgeInsets.fromLTRB(30, 8, 30, 0),
             height: 300,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
@@ -202,6 +203,34 @@ class EventPageState extends State<EventPage> {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            child: ElevatedButton(
+                onPressed: () {
+                  calendar.Add2Calendar.addEvent2Cal(
+                    calendar.Event(
+                      title: event.name,
+                      description: event.description,
+                      location: '${event.latitude} , ${event.longitude}',
+                      startDate: DateTime.now(),
+                      endDate: DateTime.now().add(
+                        const Duration(
+                          days: 1,
+                          hours: 2,
+                          minutes: 15,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.event),
+                    Text('   Add to calendar'),
+                  ],
+                )),
+          )
         ],
       ),
     );
