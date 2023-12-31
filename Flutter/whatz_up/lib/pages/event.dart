@@ -85,7 +85,8 @@ class EventPageState extends State<EventPage> {
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
               const Text("10/01/2024 17:00",
-                  style: TextStyle(color: Colors.white70)),
+                  style:
+                      TextStyle(color: Colors.white70)), // TODO: Hardcoded date
               const SizedBox(height: 15),
               const Text(
                 "Description",
@@ -115,17 +116,10 @@ class EventPageState extends State<EventPage> {
               borderRadius: BorderRadius.circular(15),
               child: FlutterMap(
                 options: MapOptions(
-                  bounds: LatLngBounds.fromPoints([
-                    LatLng(40.6331718829789, -8.659493989183968),
-                    LatLng(40.62755301996205, -8.64809465870283)
-                  ]),
-                  boundsOptions:
-                      const FitBoundsOptions(padding: EdgeInsets.all(50)),
-                  center: LatLng(40.6331718829789, -8.659493989183968),
+                  center: LatLng(event.latitude, event.longitude),
                   zoom: 16,
                   minZoom: 1,
                   maxZoom: 18,
-                  // Stop following the location marker on the map if user interacted with the map.
                   onPositionChanged: (MapPosition position, bool hasGesture) {
                     if (hasGesture &&
                         _followOnLocationUpdate !=
@@ -144,7 +138,6 @@ class EventPageState extends State<EventPage> {
                     child: FloatingActionButton(
                       tooltip: 'My location',
                       onPressed: () {
-                        // Follow the location marker on the map when location updated until user interact with the map.
                         setState(
                           () => _followOnLocationUpdate =
                               FollowOnLocationUpdate.always,
@@ -190,7 +183,7 @@ class EventPageState extends State<EventPage> {
                       Marker(
                         width: 50,
                         height: 50,
-                        point: LatLng(40.6331718829789, -8.659493989183968),
+                        point: LatLng(event.latitude, event.longitude),
                         builder: (ctx) => const Icon(
                           Icons.location_on,
                           shadows: <Shadow>[
@@ -208,7 +201,7 @@ class EventPageState extends State<EventPage> {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
