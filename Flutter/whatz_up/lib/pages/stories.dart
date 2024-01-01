@@ -15,7 +15,57 @@ class StoriesPage extends StatelessWidget {
           }
 
           if (snapshot.hasError) {
-            return const Text("ERROR");
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.signal_wifi_statusbar_connected_no_internet_4,
+                      size: 60,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'You are offline',
+                      style:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 15),
+                    Text(
+                      'You need an internet connection to watch stories.',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Please check your WiFi or data connection.',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                      child: const Text('Retry'),
+                      onPressed: () {
+                        context.pop(); // TODO: Make it reload the page
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
           }
 
           return const Center(

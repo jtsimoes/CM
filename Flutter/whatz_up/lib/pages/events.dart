@@ -24,19 +24,26 @@ class EventsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.wifi_off,
+                    Icons.signal_wifi_statusbar_connected_no_internet_4,
                     size: 60,
                     color: Theme.of(context).colorScheme.error,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Text(
-                    'You need an internet \nconnection to find events.',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    'You are offline',
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                           color: Theme.of(context).colorScheme.error,
                         ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
+                  Text(
+                    'You need an internet connection to find events.',
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
                   Text(
                     'Please check your WiFi or data connection.',
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
