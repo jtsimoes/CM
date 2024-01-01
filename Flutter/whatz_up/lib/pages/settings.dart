@@ -262,31 +262,32 @@ class SettingsPageState extends State<SettingsPage> {
                     Text(
                       'Select wallpaper',
                       style: Theme.of(context).textTheme.headlineSmall,
-                      textAlign: TextAlign.start,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         WallpaperOption(wallpaper: 'none'),
                         WallpaperOption(wallpaper: 'clouds'),
                         WallpaperOption(wallpaper: 'doodles'),
-                        WallpaperOption(wallpaper: 'flutter'),
                       ],
                     ),
                     const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        WallpaperOption(wallpaper: 'love'),
+                        WallpaperOption(wallpaper: 'flutter'),
                         WallpaperOption(wallpaper: 'space'),
                         WallpaperOption(wallpaper: 'water'),
-                        WallpaperOption(wallpaper: 'wood'),
                       ],
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 15),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.primaryContainer,
+                      ),
                       onPressed: () {
                         context.pop();
                       },
@@ -376,7 +377,7 @@ class WallpaperOption extends StatelessWidget {
     bool current =
         profileBox.get('wallpaper', defaultValue: 'doodles') == wallpaper;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
         children: [
           Card(
