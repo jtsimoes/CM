@@ -17,8 +17,47 @@ class EventsPage extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
-            return Text(
-                'Error: ${snapshot.error}'); // TODO: Show error message if something went wrong
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.wifi_off,
+                    size: 60,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'You need an internet \nconnection to find events.',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Please check your WiFi or data connection.',
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                    ),
+                    child: const Text('Retry'),
+                    onPressed: () {
+                      context.go('/'); // TODO: Make it reload the page
+                    },
+                  ),
+                ],
+              ),
+            );
           } else {
             return ListView.builder(
               itemCount: snapshot.data!.length,
@@ -95,12 +134,10 @@ class EventsPage extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   children: <Widget>[
                                     ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Theme.of(context)
-                                                    .colorScheme
-                                                    .primaryContainer),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
                                       ),
                                       child: const Text('Add to calendar'),
                                       onPressed: () {
@@ -123,12 +160,10 @@ class EventsPage extends StatelessWidget {
                                       },
                                     ),
                                     ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Theme.of(context)
-                                                    .colorScheme
-                                                    .primaryContainer),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
                                       ),
                                       child: const Text('Explore'),
                                       onPressed: () {
