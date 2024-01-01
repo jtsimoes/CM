@@ -301,7 +301,7 @@ class SettingsPageState extends State<SettingsPage> {
           SwitchListTile(
             secondary: const Icon(Icons.notifications),
             title: const LocaleText('settings_notifications'),
-            value: settingsBox.get('notifications', defaultValue: false)!,
+            value: settingsBox.get('notifications', defaultValue: true)!,
             onChanged: (bool value) {
               setState(() {
                 settingsBox.put('notifications', value);
