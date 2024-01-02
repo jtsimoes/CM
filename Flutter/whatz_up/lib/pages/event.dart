@@ -165,7 +165,6 @@ class EventPageState extends State<EventPage> {
                   ),
                   CurrentLocationLayer(
                     followOnLocationUpdate: _followOnLocationUpdate,
-                    turnOnHeadingUpdate: TurnOnHeadingUpdate.always,
                     style: const LocationMarkerStyle(
                       marker: DefaultLocationMarker(
                         child: Icon(
