@@ -59,7 +59,7 @@ class StoriesPage extends StatelessWidget {
                       ),
                       child: const Text('Retry'),
                       onPressed: () {
-                        context.pop(); // TODO: Make it reload the page
+                        context.pop();
                       },
                     ),
                   ],

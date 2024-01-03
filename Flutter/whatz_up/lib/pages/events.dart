@@ -59,7 +59,7 @@ class EventsPage extends StatelessWidget {
                     ),
                     child: const Text('Retry'),
                     onPressed: () {
-                      context.go('/'); // TODO: Make it reload the page
+                      DefaultTabController.of(context).animateTo(1);
                     },
                   ),
                 ],
