@@ -7,8 +7,107 @@ import 'package:whatz_up/utils/globals.dart';
 
 bool isModalBottomSheetOpen = false;
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => HomePageState();
+}
+
+class HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    ShakeDetector.autoStart(
+      onPhoneShake: () {
+        if (!isModalBottomSheetOpen) {
+          isModalBottomSheetOpen = true;
+          showModalBottomSheet(
+            showDragHandle: true,
+            context: context,
+            builder: (context) => SizedBox(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Report a technical problem",
+                        style: Theme.of(context).textTheme.titleLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        "You are seeing this because you shook your phone three times. This is a shortcut to open the dialog box for reporting problems on the app.",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 15),
+                      const Text(
+                        "If something isn't working correctly, you can give feedback to help us make WhatzUp better.",
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 25),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).colorScheme.error,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onError,
+                          minimumSize: const Size(900, 50),
+                        ),
+                        onPressed: () {
+                          context.pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                showCloseIcon: true,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.tertiary,
+                                content: const Text(
+                                    "The problem was reported, thank you for your feedback!")),
+                          );
+                        },
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Icon(Icons.bug_report),
+                            SizedBox(width: 5),
+                            Text("Report problem")
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.tertiary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onTertiary,
+                          minimumSize: const Size(1000, 50),
+                        ),
+                        onPressed: () => context.pop(),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Icon(Icons.exit_to_app),
+                            SizedBox(width: 5),
+                            Text("Cancel")
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ).whenComplete(() => isModalBottomSheetOpen = false);
+        }
+      },
+      minimumShakeCount: 2,
+      shakeSlopTimeMS: 2000,
+      shakeThresholdGravity: 2.7,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,101 +204,14 @@ class HomePage extends StatelessWidget {
             );
           },
         ),
-        body: ShakeGesture(
-            onShake: () {
-              if (!isModalBottomSheetOpen) {
-                isModalBottomSheetOpen = true;
-                showModalBottomSheet(
-                  showDragHandle: true,
-                  context: context,
-                  builder: (context) => SizedBox(
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              "Report a technical problem",
-                              style: Theme.of(context).textTheme.titleLarge,
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 20),
-                            Text(
-                              "You are seeing this because you shook your phone three times. This is a shortcut to open the dialog box for reporting problems on the app.",
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            const SizedBox(height: 15),
-                            const Text(
-                              "If something isn't working correctly, you can give feedback to help us make WhatzUp better.",
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 25),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.error,
-                                foregroundColor:
-                                    Theme.of(context).colorScheme.onError,
-                                minimumSize: const Size(900, 50),
-                              ),
-                              onPressed: () {
-                                context.pop();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      showCloseIcon: true,
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary,
-                                      content: const Text(
-                                          "The problem was reported, thank you for your feedback!")),
-                                );
-                              },
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Icon(Icons.bug_report),
-                                  SizedBox(width: 5),
-                                  Text("Report problem")
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 15),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.tertiary,
-                                foregroundColor:
-                                    Theme.of(context).colorScheme.onTertiary,
-                                minimumSize: const Size(1000, 50),
-                              ),
-                              onPressed: () => context.pop(),
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Icon(Icons.exit_to_app),
-                                  SizedBox(width: 5),
-                                  Text("Cancel")
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ).whenComplete(() => isModalBottomSheetOpen = false);
-              }
-            },
-            child: TabBarView(
-              children: [
-                const EventsPage(),
-                const ChatsPage(),
-                StatusPage(),
-                const CallsPage(),
-              ],
-            )),
+        body: TabBarView(
+          children: [
+            const EventsPage(),
+            const ChatsPage(),
+            StatusPage(),
+            const CallsPage(),
+          ],
+        ),
       ),
     );
   }
