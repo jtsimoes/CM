@@ -1,21 +1,18 @@
 import 'package:whatz_up/utils/globals.dart';
 
-import 'package:whatz_up/utils/saved_image_view.dart';
-
 class Status {
-  final String userInitials;
   final String userName;
+  final String lastUpdate;
 
-  Status(this.userInitials, this.userName);
+  Status(this.userName, this.lastUpdate);
 }
 
 class StatusPage extends StatelessWidget {
   StatusPage({Key? key}) : super(key: key);
 
-  final List<Status> statusUpdates = [
-    Status("J", "John Doe"),
-    Status("E", "Example User"),
-    // TODO: Add more status updates here
+  final List<Status> status = [
+    Status("João Tomás", "just now"),
+    Status("Pedro Duarte", "5 minutes ago"),
   ];
 
   @override
@@ -25,8 +22,33 @@ class StatusPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            leading: const CircleAvatar(
-              child: Text("ME"),
+            leading: Stack(
+              children: <Widget>[
+                CircleAvatar(
+                  child: Image.asset(
+                    profileBox.get('avatar',
+                        defaultValue: 'assets/media/avatar.png')!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  width: 15,
+                  height: 15,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    style: ButtonStyle(
+                        iconColor: MaterialStateProperty.all<Color>(
+                            Theme.of(context).colorScheme.primary),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Theme.of(context).colorScheme.onPrimary)),
+                    icon: const Icon(Icons.add),
+                    iconSize: 15,
+                    onPressed: null,
+                  ),
+                ),
+              ],
             ),
             title: const Text("My status"),
             subtitle: const Text("Tap to add status update",
@@ -36,7 +58,17 @@ class StatusPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const WhatsappStoryEditor()),
-              );
+              ).then((whatsappStoryEditorResult) {
+                if (whatsappStoryEditorResult != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      showCloseIcon: true,
+                      backgroundColor: Theme.of(context).colorScheme.tertiary,
+                      content: const Text("Status update published!"),
+                    ),
+                  );
+                }
+              });
             },
           ),
           Container(height: 5),
@@ -47,16 +79,16 @@ class StatusPage extends StatelessWidget {
           ),
           ListView.builder(
             shrinkWrap: true,
-            itemCount: statusUpdates.length,
+            itemCount: status.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 leading: CircleAvatar(
-                  child: Text(statusUpdates[index].userInitials),
+                  child: Text(status[index].userName[0]),
                 ),
-                title: Text(statusUpdates[index].userName),
-                subtitle: const Text('36 minutes ago'),
+                title: Text(status[index].userName),
+                subtitle: Text(status[index].lastUpdate),
                 onTap: () {
-                  context.push("/story/$index");
+                  context.push("/story/${status[index].userName}");
                 },
               );
             },
@@ -98,22 +130,20 @@ class StatusPage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: 'Add status update',
         child: const Icon(Icons.camera_alt),
         onPressed: () {
-          // TODO: Finish camera functionality
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => const WhatsappStoryEditor()),
           ).then((whatsappStoryEditorResult) {
             if (whatsappStoryEditorResult != null) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SavedImageView(
-                    image: whatsappStoryEditorResult.image,
-                    caption: whatsappStoryEditorResult.caption,
-                  ),
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  showCloseIcon: true,
+                  backgroundColor: Theme.of(context).colorScheme.tertiary,
+                  content: const Text("Status update published!"),
                 ),
               );
             }

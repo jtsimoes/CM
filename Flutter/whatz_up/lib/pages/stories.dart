@@ -1,7 +1,9 @@
 import 'package:whatz_up/utils/globals.dart';
 
 class StoriesPage extends StatelessWidget {
-  const StoriesPage({Key? key, String? userId}) : super(key: key);
+  final String? userId;
+
+  const StoriesPage({Key? key, this.userId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,6 +12,7 @@ class StoriesPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return StoryViewDelegate(
+              user: userId,
               stories: snapshot.data,
             );
           }
@@ -76,24 +79,25 @@ class StoriesPage extends StatelessWidget {
             ),
           );
         },
-        future: fetchStories(),
+        future: fetchStories(userId),
       ),
     );
   }
 }
 
 class StoryViewDelegate extends StatefulWidget {
+  final String? user;
   final List<Story>? stories;
 
-  const StoryViewDelegate({super.key, this.stories});
+  const StoryViewDelegate({super.key, this.user, this.stories});
 
   @override
   StoryViewDelegateState createState() => StoryViewDelegateState();
 }
 
 class StoryViewDelegateState extends State<StoryViewDelegate> {
-  // final StoryController controller = StoryController();
-  // List<StoryItem> storyItems = [];
+  final StoryController controller = StoryController();
+  List<StoryItem> storyItems = [];
 
   String? when = "";
 
@@ -102,37 +106,37 @@ class StoryViewDelegateState extends State<StoryViewDelegate> {
     super.initState();
     for (var story in widget.stories!) {
       if (story.mediaType == MediaType.text) {
-        // storyItems.add(
-        //   StoryItem.text(
-        //     title: story.caption!,
-        //     backgroundColor: Colors.purpleAccent,
-        //     duration: Duration(
-        //       milliseconds: (story.duration! * 1000).toInt(),
-        //     ),
-        //   ),
-        // );
+        storyItems.add(
+          StoryItem.text(
+            title: story.caption!,
+            backgroundColor: Colors.purpleAccent,
+            duration: Duration(
+              milliseconds: (story.duration! * 1000).toInt(),
+            ),
+          ),
+        );
       }
 
       if (story.mediaType == MediaType.image) {
-        // storyItems.add(StoryItem.pageImage(
-        //   url: story.media!,
-        //   controller: controller,
-        //   caption: story.caption,
-        //   duration: Duration(
-        //     milliseconds: (story.duration! * 1000).toInt(),
-        //   ),
-        // ));
+        storyItems.add(StoryItem.pageImage(
+          url: story.media!,
+          controller: controller,
+          caption: story.caption,
+          duration: Duration(
+            milliseconds: (story.duration! * 1000).toInt(),
+          ),
+        ));
       }
 
       if (story.mediaType == MediaType.video) {
-        // storyItems.add(
-        //   StoryItem.pageVideo(
-        //     story.media!,
-        //     controller: controller,
-        //     duration: Duration(milliseconds: (story.duration! * 1000).toInt()),
-        //     caption: story.caption,
-        //   ),
-        // );
+        storyItems.add(
+          StoryItem.pageVideo(
+            story.media!,
+            controller: controller,
+            duration: Duration(milliseconds: (story.duration! * 1000).toInt()),
+            caption: story.caption,
+          ),
+        );
       }
     }
 
@@ -143,10 +147,9 @@ class StoryViewDelegateState extends State<StoryViewDelegate> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const CircleAvatar(
+        CircleAvatar(
           radius: 24,
-          backgroundImage: NetworkImage(
-              "https://avatars2.githubusercontent.com/u/5024388?s=460&u=d260850b9267cf89188499695f8bcf71e743f8a7&v=4"),
+          child: Text(widget.user![0]),
         ),
         const SizedBox(
           width: 16,
@@ -155,9 +158,9 @@ class StoryViewDelegateState extends State<StoryViewDelegate> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                "User 1",
-                style: TextStyle(
+              Text(
+                widget.user!,
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
@@ -177,7 +180,7 @@ class StoryViewDelegateState extends State<StoryViewDelegate> {
 
   @override
   void dispose() {
-    // controller.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -185,31 +188,31 @@ class StoryViewDelegateState extends State<StoryViewDelegate> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        // StoryView(
-        //   storyItems: storyItems,
-        //   controller: controller,
-        //   onComplete: () {
-        //     context.pop();
-        //   },
-        //   onVerticalSwipeComplete: (v) {
-        //     if (v == Direction.down) {
-        //       context.pop();
-        //     }
-        //   },
-        //   onStoryShow: (storyItem) {
-        //     int pos = storyItems.indexOf(storyItem);
+        StoryView(
+          storyItems: storyItems,
+          controller: controller,
+          onComplete: () {
+            context.pop();
+          },
+          onVerticalSwipeComplete: (v) {
+            if (v == Direction.down) {
+              context.pop();
+            }
+          },
+          onStoryShow: (storyItem) {
+            int pos = storyItems.indexOf(storyItem);
 
-        //     // the reason for doing setState only after the first
-        //     // position is becuase by the first iteration, the layout
-        //     // hasn't been laid yet, thus raising some exception
-        //     // (each child need to be laid exactly once)
-        //     if (pos > 0) {
-        //       setState(() {
-        //         when = widget.stories![pos].when;
-        //       });
-        //     }
-        //   },
-        // ),
+            // the reason for doing setState only after the first
+            // position is becuase by the first iteration, the layout
+            // hasn't been laid yet, thus raising some exception
+            // (each child need to be laid exactly once)
+            if (pos > 0) {
+              setState(() {
+                when = widget.stories![pos].when;
+              });
+            }
+          },
+        ),
         Container(
           padding: const EdgeInsets.only(
             top: 48,
