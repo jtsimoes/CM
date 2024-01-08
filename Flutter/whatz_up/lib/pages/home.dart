@@ -118,7 +118,7 @@ class HomePageState extends State<HomePage> {
         appBar: AppBarWithSearchSwitch(
           onChanged: (value) => context.read<SearchBloc>().updateSearch(value),
           searchInputDecoration: InputDecoration(
-            hintText: 'Type to search...',
+            hintText: 'Search...',
             filled: false,
             labelStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Theme.of(context).colorScheme.error,
@@ -155,10 +155,6 @@ class HomePageState extends State<HomePage> {
                       PopupMenuItem(
                         onTap: () => context.push("/settings"),
                         child: const Text("Settings"),
-                      ),
-                      PopupMenuItem(
-                        onTap: () => print("TODO: Logout"),
-                        child: const Text("Logout"),
                       ),
                     ];
                   },
