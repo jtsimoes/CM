@@ -8,13 +8,6 @@ class ChatPage extends StatefulWidget {
 }
 
 class ChatPageState extends State<ChatPage> {
-  AudioPlayer audioPlayer = AudioPlayer();
-  Duration duration = const Duration();
-  Duration position = const Duration();
-  bool isPlaying = false;
-  bool isLoading = false;
-  bool isPause = false;
-
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -142,20 +135,6 @@ class ChatPageState extends State<ChatPage> {
                     color: const Color(0xFF015146),
                     tail: false,
                     seen: true,
-                  ),
-                  BubbleNormalAudio(
-                    color: const Color(0xFF015146),
-                    duration: duration.inSeconds.toDouble(),
-                    position: position.inSeconds.toDouble(),
-                    isPlaying: isPlaying,
-                    isLoading: isLoading,
-                    isPause: isPause,
-                    onSeekChanged: _changeSeek,
-                    onPlayPauseButtonClick: _playAudio,
-                    tail: false,
-                    seen: true,
-                    textStyle:
-                        const TextStyle(color: Colors.white, fontSize: 10),
                   ),
                   DateChip(
                     date: DateTime(now.year, now.month, now.day - 1),
@@ -286,56 +265,6 @@ class ChatPageState extends State<ChatPage> {
         errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
     );
-  }
-
-  void _changeSeek(double value) {
-    setState(() {
-      audioPlayer.seek(Duration(seconds: value.toInt()));
-    });
-  }
-
-  void _playAudio() async {
-    const url = 'https://samples-files.com/samples/Audio/mp3/sample-file-4.mp3';
-    if (isPause) {
-      await audioPlayer.resume();
-      setState(() {
-        isPlaying = true;
-        isPause = false;
-      });
-    } else if (isPlaying) {
-      await audioPlayer.pause();
-      setState(() {
-        isPlaying = false;
-        isPause = true;
-      });
-    } else {
-      setState(() {
-        isLoading = true;
-      });
-      await audioPlayer.play(UrlSource(url));
-      setState(() {
-        isPlaying = true;
-      });
-    }
-
-    audioPlayer.onDurationChanged.listen((Duration d) {
-      setState(() {
-        duration = d;
-        isLoading = false;
-      });
-    });
-    audioPlayer.onPositionChanged.listen((Duration p) {
-      setState(() {
-        position = p;
-      });
-    });
-    audioPlayer.onPlayerComplete.listen((event) {
-      setState(() {
-        isPlaying = false;
-        duration = const Duration();
-        position = const Duration();
-      });
-    });
   }
 
   // Call this method after adding a new message to the chat

@@ -12,7 +12,6 @@ export 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:shake/shake.dart';
 export 'package:chat_bubbles/chat_bubbles.dart';
-export 'package:audioplayers/audioplayers.dart';
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:story_view/story_view.dart';
 export 'package:whatsapp_story_editor/whatsapp_story_editor.dart';
