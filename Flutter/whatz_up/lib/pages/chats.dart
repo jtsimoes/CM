@@ -3,25 +3,43 @@ import 'package:flutter_nearby_connections/flutter_nearby_connections.dart';
 
 enum DeviceType { advertiser, browser }
 
+enum MessageStatus { sent, delivered, read }
+
 class Chat {
   final String userName;
   final String lastMessage;
   final String timestamp;
-  final bool unRead;
+  final bool isUnread;
+  final MessageStatus? status;
 
-  Chat(this.userName, this.lastMessage, this.timestamp, this.unRead);
+  Chat(this.userName, this.lastMessage, this.timestamp, this.isUnread,
+      [this.status]);
 }
 
 final List<Chat> chatHistory = [
   Chat('Pedro Duarte', "Hey, I'm ready for the presentation! Lets go? 💪",
       '11:24', false),
-  Chat('Nuno Oliveira', "any recommendations for the next one?", 'Yesterday',
+  Chat('Nuno Oliveira', "That was sick, we need to go back 🔙", 'Yesterday',
       true),
+  Chat('José Carvalho', "bye see ya", 'Yesterday', false, MessageStatus.sent),
   Chat('Amélia Costa', "this concert is really amazing, im loving it",
-      '04/01/2024', false),
-  Chat('Margarida Veloso', "Thanks for the help!! ❤️", '15/12/2023', false),
-  Chat('Alexandre Teixeira', "yo yo, whats up? all good dude?", '05/10/2023',
+      '06/01/2024', false),
+  Chat('Margarida Veloso', "Thanks for the help!! ❤️", '04/01/2024', false),
+  Chat('Carolina Patrocínio', "HAPPY NEW YEAR 🥳🎉", '01/01/2024', false,
+      MessageStatus.delivered),
+  Chat('Martim Silva', "u too", '30/12/2023', false, MessageStatus.read),
+  Chat('Alexandre Teixeira', "Merry Xmas :)", '25/12/2023', false),
+  Chat('Ana Lopes', "happy christmas 🎅🏻🎄", '23/12/2023', false,
+      MessageStatus.read),
+  Chat('Miguel Oliveira', "yo yo, whats up? all good dude?", '03/12/2023',
       false),
+  Chat('Alice Pereira', "i'm starving, lets eat after this?", '01/12/2023',
+      false),
+  Chat('Afonso Silva', "Any recommendations for the nextt one?", '15/11/2023',
+      false),
+  Chat('Leonor Rodrigues', "Ok", '22/10/2023', false, MessageStatus.read),
+  Chat('Mariana Coito', "we'll be back next year, no worries", '10/10/2023',
+      false, MessageStatus.read),
 ];
 
 class ChatsPage extends StatefulWidget {
@@ -179,16 +197,39 @@ class ChatsPageState extends State<ChatsPage> {
                     child: Text(chatHistory[index].userName[0]),
                   ),
                   title: Text(chatHistory[index].userName),
-                  subtitle: Text(
-                    chatHistory[index].lastMessage,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  subtitle: Row(
+                    children: [
+                      switch (chatHistory[index].status) {
+                        MessageStatus.sent => const Padding(
+                            padding: EdgeInsets.only(right: 3),
+                            child: Icon(Icons.done, size: 15)),
+                        MessageStatus.delivered => const Padding(
+                            padding: EdgeInsets.only(right: 3),
+                            child: Icon(Icons.done_all, size: 15)),
+                        MessageStatus.read => const Padding(
+                            padding: EdgeInsets.only(right: 3),
+                            child: Icon(Icons.done_all,
+                                size: 15, color: Colors.lightBlueAccent)),
+                        _ => const SizedBox(),
+                      },
+                      Text(
+                        chatHistory[index].lastMessage,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: chatHistory[index].isUnread
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                        ),
+                      ),
+                    ],
                   ),
                   trailing: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(chatHistory[index].timestamp),
-                      if (chatHistory[index].unRead)
+                      if (chatHistory[index].isUnread)
                         Container(
                           margin: const EdgeInsets.only(top: 5),
                           decoration: BoxDecoration(
@@ -214,7 +255,7 @@ class ChatsPageState extends State<ChatsPage> {
                   onLongPress: () {
                     showDialog<void>(
                       context: context,
-                      barrierDismissible: false, // user must tap button!
+                      barrierDismissible: true,
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text('Delete this chat?'),
