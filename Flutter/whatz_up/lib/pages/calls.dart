@@ -1,7 +1,5 @@
 import 'package:whatz_up/utils/globals.dart';
 
-import 'package:url_launcher/url_launcher.dart';
-
 class Call {
   final String userName;
   final String timestamp;

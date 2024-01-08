@@ -17,6 +17,7 @@ export 'package:cached_network_image/cached_network_image.dart';
 export 'package:story_view/story_view.dart';
 export 'package:whatsapp_story_editor/whatsapp_story_editor.dart';
 export 'package:image_picker/image_picker.dart';
+export 'package:url_launcher/url_launcher.dart';
 
 export 'package:whatz_up/utils/routes.dart';
 export 'package:whatz_up/utils/themes.dart';

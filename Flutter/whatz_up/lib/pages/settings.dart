@@ -319,19 +319,18 @@ class SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.backup),
-            title: const LocaleText(
-              'settings_chat_backup',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {},
-          ),
-          ListTile(
             leading: const Icon(Icons.help_outline),
             title: const LocaleText('settings_help'),
-            onTap: () {},
+            onTap: () async {
+              final Uri launchUri = Uri(
+                scheme: 'mailto',
+                path: 'whatzup@ua.pt',
+                query: 'subject=Support%20Ticket%20-%20WhatzUp',
+              );
+              if (!await launchUrl(launchUri)) {
+                throw Exception('Could not launch email app');
+              }
+            },
           ),
           ListTile(
             leading: const Icon(Icons.info_outline),
