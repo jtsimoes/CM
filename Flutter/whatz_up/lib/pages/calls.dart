@@ -29,35 +29,63 @@ class CallsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int count = 0;
     return Scaffold(
-      body: ListView.builder(
-        itemCount: callHistory.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            leading: CircleAvatar(
-              child: Text(callHistory[index].userName[0]),
-            ),
-            title: Text(callHistory[index].userName),
-            subtitle: Row(
-              children: <Widget>[
-                callHistory[index].callType == 'out'
-                    ? const Icon(Icons.call_made, color: Colors.green, size: 15)
-                    : const Icon(Icons.call_received,
-                        color: Colors.red, size: 15),
-                const SizedBox(width: 4),
-                Text(
-                  callHistory[index].timestamp,
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Theme.of(context).colorScheme.outline),
+      body: BlocBuilder<SearchBloc, String>(
+        builder: (context, search) {
+          return ListView.builder(
+            itemCount: callHistory.length,
+            itemBuilder: (BuildContext context, int index) {
+              String search = context.read<SearchBloc>().state;
+              if (search.isNotEmpty &&
+                  !(callHistory[index]
+                      .userName
+                      .toLowerCase()
+                      .contains(search.toLowerCase()))) {
+                count++;
+                if (count == callHistory.length) {
+                  count = 0;
+                  return Padding(
+                    padding: const EdgeInsets.all(40),
+                    child: Text(
+                      'No results found for "$search"',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  );
+                }
+                return Container();
+              }
+
+              count = 0;
+              return ListTile(
+                leading: CircleAvatar(
+                  child: Text(callHistory[index].userName[0]),
                 ),
-              ],
-            ),
-            trailing: callHistory[index].callMode == 'voice'
-                ? const Icon(Icons.call)
-                : const Icon(Icons.videocam),
-            onTap: () {
-              context.push('/call/${callHistory[index].userName}');
+                title: Text(callHistory[index].userName),
+                subtitle: Row(
+                  children: <Widget>[
+                    callHistory[index].callType == 'out'
+                        ? const Icon(Icons.call_made,
+                            color: Colors.green, size: 15)
+                        : const Icon(Icons.call_received,
+                            color: Colors.red, size: 15),
+                    const SizedBox(width: 4),
+                    Text(
+                      callHistory[index].timestamp,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).colorScheme.outline),
+                    ),
+                  ],
+                ),
+                trailing: callHistory[index].callMode == 'voice'
+                    ? const Icon(Icons.call)
+                    : const Icon(Icons.videocam),
+                onTap: () {
+                  context.push('/call/${callHistory[index].userName}');
+                },
+              );
             },
           );
         },

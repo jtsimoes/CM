@@ -17,6 +17,7 @@ class StatusPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int count = 0;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,18 +78,44 @@ class StatusPage extends StatelessWidget {
             indent: 15,
             endIndent: 15,
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: status.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                leading: CircleAvatar(
-                  child: Text(status[index].userName[0]),
-                ),
-                title: Text(status[index].userName),
-                subtitle: Text(status[index].lastUpdate),
-                onTap: () {
-                  context.push("/story/${status[index].userName}");
+          BlocBuilder<SearchBloc, String>(
+            builder: (context, search) {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: status.length,
+                itemBuilder: (BuildContext context, int index) {
+                  String search = context.read<SearchBloc>().state;
+                  if (search.isNotEmpty &&
+                      !(status[index]
+                          .userName
+                          .toLowerCase()
+                          .contains(search.toLowerCase()))) {
+                    count++;
+                    if (count == status.length) {
+                      count = 0;
+                      return Padding(
+                        padding: const EdgeInsets.all(40),
+                        child: Text(
+                          'No results found for "$search"',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      );
+                    }
+                    return Container();
+                  }
+
+                  count = 0;
+                  return ListTile(
+                    leading: CircleAvatar(
+                      child: Text(status[index].userName[0]),
+                    ),
+                    title: Text(status[index].userName),
+                    subtitle: Text(status[index].lastUpdate),
+                    onTap: () {
+                      context.push("/story/${status[index].userName}");
+                    },
+                  );
                 },
               );
             },

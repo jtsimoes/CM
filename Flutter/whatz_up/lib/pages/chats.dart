@@ -87,6 +87,7 @@ class ChatsPageState extends State<ChatsPage> {
 
   @override
   Widget build(BuildContext context) {
+    int count = 0;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,123 +188,153 @@ class ChatsPageState extends State<ChatsPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              controller: scrollController,
-              itemCount: chatHistory.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    child: Text(chatHistory[index].userName[0]),
-                  ),
-                  title: Text(
-                    chatHistory[index].userName,
-                    style: TextStyle(
-                      fontWeight: chatHistory[index].isUnread
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                    ),
-                  ),
-                  subtitle: Row(
-                    children: [
-                      switch (chatHistory[index].status) {
-                        MessageStatus.sent => const Padding(
-                            padding: EdgeInsets.only(right: 3),
-                            child: Icon(Icons.done, size: 15)),
-                        MessageStatus.delivered => const Padding(
-                            padding: EdgeInsets.only(right: 3),
-                            child: Icon(Icons.done_all, size: 15)),
-                        MessageStatus.read => const Padding(
-                            padding: EdgeInsets.only(right: 3),
-                            child: Icon(Icons.done_all,
-                                size: 15, color: Colors.lightBlueAccent)),
-                        _ => const SizedBox(),
-                      },
-                      Expanded(
-                        child: Text(
-                          chatHistory[index].lastMessage,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: chatHistory[index].isUnread
-                                ? FontWeight.bold
-                                : FontWeight.normal,
+            child: BlocBuilder<SearchBloc, String>(
+              builder: (context, search) {
+                return ListView.builder(
+                  controller: scrollController,
+                  itemCount: chatHistory.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    String search = context.read<SearchBloc>().state;
+                    if (search.isNotEmpty &&
+                        !(chatHistory[index]
+                                .userName
+                                .toLowerCase()
+                                .contains(search.toLowerCase()) ||
+                            chatHistory[index]
+                                .lastMessage
+                                .toLowerCase()
+                                .contains(search.toLowerCase()))) {
+                      count++;
+                      if (count == chatHistory.length) {
+                        count = 0;
+                        return Padding(
+                          padding: const EdgeInsets.all(40),
+                          child: Text(
+                            'No results found for "$search"',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
+                        );
+                      }
+                      return Container();
+                    }
+
+                    count = 0;
+                    return ListTile(
+                      leading: CircleAvatar(
+                        child: Text(chatHistory[index].userName[0]),
+                      ),
+                      title: Text(
+                        chatHistory[index].userName,
+                        style: TextStyle(
+                          fontWeight: chatHistory[index].isUnread
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                         ),
                       ),
-                    ],
-                  ),
-                  trailing: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(chatHistory[index].timestamp),
-                      if (chatHistory[index].isUnread)
-                        Container(
-                          margin: const EdgeInsets.only(top: 5),
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(100))),
-                          alignment: Alignment.center,
-                          height: 18,
-                          width: 18,
-                          child: const Text(
-                            '1',
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                      subtitle: Row(
+                        children: [
+                          switch (chatHistory[index].status) {
+                            MessageStatus.sent => const Padding(
+                                padding: EdgeInsets.only(right: 3),
+                                child: Icon(Icons.done, size: 15)),
+                            MessageStatus.delivered => const Padding(
+                                padding: EdgeInsets.only(right: 3),
+                                child: Icon(Icons.done_all, size: 15)),
+                            MessageStatus.read => const Padding(
+                                padding: EdgeInsets.only(right: 3),
+                                child: Icon(Icons.done_all,
+                                    size: 15, color: Colors.lightBlueAccent)),
+                            _ => const SizedBox(),
+                          },
+                          Expanded(
+                            child: Text(
+                              chatHistory[index].lastMessage,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontWeight: chatHistory[index].isUnread
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                              ),
                             ),
                           ),
-                        ),
-                    ],
-                  ),
-                  onTap: () =>
-                      context.push('/chat/${chatHistory[index].userName}'),
-                  onLongPress: () {
-                    showDialog<void>(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          icon: const Icon(Icons.delete, size: 40),
-                          title: const Text('Delete this chat?'),
-                          content: const SingleChildScrollView(
-                            child: ListBody(
-                              children: <Widget>[
-                                Text(
-                                    'Are you sure you want to delete this chat?'),
-                                SizedBox(height: 2),
-                                Text('This action cannot be undone.'),
+                        ],
+                      ),
+                      trailing: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(chatHistory[index].timestamp),
+                          if (chatHistory[index].isUnread)
+                            Container(
+                              margin: const EdgeInsets.only(top: 5),
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(100))),
+                              alignment: Alignment.center,
+                              height: 18,
+                              width: 18,
+                              child: const Text(
+                                '1',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      onTap: () =>
+                          context.push('/chat/${chatHistory[index].userName}'),
+                      onLongPress: () {
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              icon: const Icon(Icons.delete, size: 40),
+                              title: const Text('Delete this chat?'),
+                              content: const SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Text(
+                                        'Are you sure you want to delete this chat?'),
+                                    SizedBox(height: 2),
+                                    Text('This action cannot be undone.'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
+                                  ),
+                                  child: const Text('Cancel'),
+                                  onPressed: () {
+                                    context.pop();
+                                  },
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.onError,
+                                  ),
+                                  child: const Text('Delete'),
+                                  onPressed: () {
+                                    setState(() {
+                                      chatHistory.removeAt(index);
+                                    });
+                                    context.pop();
+                                  },
+                                ),
                               ],
-                            ),
-                          ),
-                          actions: <Widget>[
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
-                              ),
-                              child: const Text('Cancel'),
-                              onPressed: () {
-                                context.pop();
-                              },
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.onError,
-                              ),
-                              child: const Text('Delete'),
-                              onPressed: () {
-                                setState(() {
-                                  chatHistory.removeAt(index);
-                                });
-                                context.pop();
-                              },
-                            ),
-                          ],
+                            );
+                          },
                         );
                       },
                     );

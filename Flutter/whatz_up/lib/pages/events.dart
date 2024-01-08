@@ -8,6 +8,7 @@ class EventsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int count = 0;
     return BlocBuilder<SearchBloc, String>(builder: (context, search) {
       return FutureBuilder<List<Event>>(
         future: Event.find(),
@@ -78,9 +79,22 @@ class EventsPage extends StatelessWidget {
                         event.description
                             .toLowerCase()
                             .contains(search.toLowerCase()))) {
+                  count++;
+                  if (count == snapshot.data!.length) {
+                    count = 0;
+                    return Padding(
+                      padding: const EdgeInsets.all(40),
+                      child: Text(
+                        'No results found for "$search"',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    );
+                  }
                   return Container();
                 }
 
+                count = 0;
                 return Container(
                   margin: const EdgeInsets.all(15),
                   child: Card(
