@@ -2,11 +2,14 @@ import "package:go_router/go_router.dart";
 import "package:whatz_up/models/event.dart";
 import "package:whatz_up/pages/chat.dart";
 import "package:whatz_up/pages/home.dart";
+import "package:whatz_up/pages/nearby.dart";
 import "package:whatz_up/pages/stories.dart";
 import "package:whatz_up/pages/event.dart";
 import "package:whatz_up/pages/call.dart";
 import "package:whatz_up/pages/profile.dart";
 import "package:whatz_up/pages/settings.dart";
+
+import 'package:flutter_nearby_connections/flutter_nearby_connections.dart';
 
 final router = GoRouter(
   initialLocation: "/",
@@ -23,6 +26,12 @@ final router = GoRouter(
           ChatPage(userId: state.pathParameters['userId']),
     ),
     GoRoute(
+      name: "nearby",
+      path: "/nearby",
+      builder: (context, state) =>
+          NearbyChatPage(device: state.extra as Device),
+    ),
+    GoRoute(
       name: "story",
       path: "/story/:userId",
       builder: (context, state) =>
@@ -30,9 +39,8 @@ final router = GoRouter(
     ),
     GoRoute(
       name: "event",
-      path: "/event/:eventId",
-      builder: (context, state) =>
-          EventPage(event: state.extra as Event),
+      path: "/event",
+      builder: (context, state) => EventPage(event: state.extra as Event),
     ),
     GoRoute(
       name: "call",

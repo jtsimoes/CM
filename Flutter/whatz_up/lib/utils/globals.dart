@@ -26,7 +26,9 @@ export 'package:whatz_up/models/story.dart';
 export 'package:whatz_up/utils/boxes.dart';
 export 'package:whatz_up/utils/notifications.dart';
 
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_nearby_connections/flutter_nearby_connections.dart';
 
 class SearchBloc extends Cubit<String> {
   SearchBloc() : super('');
@@ -35,3 +37,7 @@ class SearchBloc extends Cubit<String> {
     emit(search);
   }
 }
+
+late NearbyService nearbyService;
+late StreamSubscription subscription;
+late StreamSubscription receivedDataSubscription;

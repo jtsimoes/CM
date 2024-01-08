@@ -95,7 +95,7 @@ class EventsPage extends StatelessWidget {
                           .withOpacity(0.12),
                       highlightColor: Colors.transparent,
                       onTap: () {
-                        context.push("/event/$index", extra: event);
+                        context.push("/event", extra: event);
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
