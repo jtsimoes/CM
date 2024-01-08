@@ -249,7 +249,7 @@ class ProfilePageState extends State<ProfilePage> {
                     border: UnderlineInputBorder(),
                     labelText: 'Name',
                     helperText:
-                        'This is not your username or pin. This name will be visible to your WhatzUp contacts.',
+                        'This name will be visible to your WhatzUp contacts.',
                     helperMaxLines: 10,
                     icon: Icon(Icons.person),
                   ),
