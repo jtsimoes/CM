@@ -36,18 +36,12 @@ class ProfilePageState extends State<ProfilePage> {
 
   @override
   void dispose() {
-    // Clean up the controllers when the widget is disposed.
     nameController.dispose();
     bioController.dispose();
     phoneController.dispose();
     super.dispose();
   }
 
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -259,7 +253,6 @@ class ProfilePageState extends State<ProfilePage> {
                     helperMaxLines: 10,
                     icon: Icon(Icons.person),
                   ),
-                  // The validator receives the text that the user has entered.
                   validator: (String? value) {
                     return (value == null || value.isEmpty)
                         ? 'Please enter some text. Name cannot be empty.'
@@ -274,7 +267,6 @@ class ProfilePageState extends State<ProfilePage> {
                     labelText: 'Bio',
                     icon: Icon(Icons.text_snippet),
                   ),
-                  // The validator receives the text that the user has entered.
                   validator: (String? value) {
                     return (value == null || value.isEmpty)
                         ? 'Please enter some text. Bio cannot be empty.'
@@ -297,17 +289,10 @@ class ProfilePageState extends State<ProfilePage> {
                     padding: const EdgeInsets.only(top: 40),
                     child: ElevatedButton(
                       onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
                         if (_formKey.currentState!.validate()) {
-                          print('Name: ${nameController.text}');
-                          print('Bio: ${bioController.text}');
-                          print('Phone: ${phoneController.text}');
-
                           profileBox.put('name', nameController.text);
                           profileBox.put('bio', bioController.text);
 
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               showCloseIcon: true,

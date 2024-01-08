@@ -172,7 +172,7 @@ class HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Text("Chats"),
-                          if (true) // TODO: Show/hide according to unread messages count
+                          if (true)
                             Container(
                               margin: const EdgeInsets.only(left: 5),
                               decoration: const BoxDecoration(
@@ -183,9 +183,9 @@ class HomePageState extends State<HomePage> {
                               height: 16,
                               width: 16,
                               child: const Text(
-                                "3", // TODO: Update count according to total of unread messages
+                                "1",
                                 style: TextStyle(
-                                  fontSize: 9,
+                                  fontSize: 11,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                 ),

@@ -85,9 +85,8 @@ class EventPageState extends State<EventPage> {
                 "Date",
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
-              const Text("10/01/2024 17:00",
-                  style:
-                      TextStyle(color: Colors.white70)), // TODO: Hardcoded date
+              const Text("27/03/2024 14:30",
+                  style: TextStyle(color: Colors.white70)),
               const SizedBox(height: 15),
               const Text(
                 "Description",

@@ -93,40 +93,6 @@ class StatusPage extends StatelessWidget {
               );
             },
           ),
-          Container(height: 20),
-          ////////////////////////////////////////////////////////////////////
-          /// TODO: Demo only for demonstration on how to get search value ///
-          ////////////////////////////////////////////////////////////////////
-          BlocBuilder<SearchBloc, String>(
-            builder: (context, value) {
-              if (value.isEmpty || value == "" || value == " ") {
-                return const Column(
-                  children: [
-                    Text(
-                      "Search mode disabled, showing all elements",
-                      style: TextStyle(fontSize: 20, color: Colors.red),
-                    ),
-                    Text(
-                      "(click on search icon and type something to begin searching)",
-                    ),
-                  ],
-                );
-              } else {
-                return Column(
-                  children: [
-                    Text(
-                      "Search mode enabled, showing only elements containing '$value'",
-                      style: const TextStyle(fontSize: 20, color: Colors.green),
-                    ),
-                    const Text(
-                      "(clear by pressing X button or delete the search text to exit search mode)",
-                    ),
-                  ],
-                );
-              }
-            },
-          ),
-          ////////////////////////////////////////////////////////////////////
         ],
       ),
       floatingActionButton: FloatingActionButton(
