@@ -23,7 +23,11 @@ class NearbyChatPageState extends State<NearbyChatPage> {
   List<Message> messages = [];
 
   void scrollToBottom() {
-    scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent + 50,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
