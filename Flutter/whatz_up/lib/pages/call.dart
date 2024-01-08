@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:whatz_up/utils/globals.dart';
 
@@ -15,6 +16,9 @@ class CallPageState extends State<CallPage> {
   String duration = 'Calling...';
   Stopwatch stopwatch = Stopwatch();
   Timer? timer;
+
+  String part1 = Random().nextInt(1000).toString().padLeft(3, '0');
+  String part2 = Random().nextInt(1000).toString().padLeft(3, '0');
 
   void showCallDuration() {
     if (stopwatch.isRunning) {
@@ -49,6 +53,7 @@ class CallPageState extends State<CallPage> {
         fln: flutterLocalNotificationsPlugin,
       );
     }
+    String phoneNumber = "(+351) 967 $part1 $part2";
     return WillPopScope(
       onWillPop: () async {
         flutterLocalNotificationsPlugin.cancel(69);
@@ -91,10 +96,17 @@ class CallPageState extends State<CallPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 25, 0, 15),
+                        padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
                         child: Text(
                           widget.userId!,
                           style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Text(
+                          phoneNumber,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Text(
