@@ -19,13 +19,12 @@ class Chat {
 final List<Chat> chatHistory = [
   Chat('Pedro Duarte', "Hey, I'm ready for the presentation! Lets go? 💪",
       '11:24', false),
-  Chat('Nuno Oliveira', "That was sick, we need to go back 🔙", 'Yesterday',
-      true),
-  Chat('José Carvalho', "bye see ya", 'Yesterday', false, MessageStatus.sent),
+  Chat('Nuno Oliveira', "We really need to go again 🔙", 'Yesterday', true),
+  Chat('António Mendes', "bye see ya", 'Yesterday', false, MessageStatus.sent),
   Chat('Amélia Costa', "this concert is really amazing, im loving it",
       '06/01/2024', false),
   Chat('Margarida Veloso', "Thanks for the help!! ❤️", '04/01/2024', false),
-  Chat('Carolina Patrocínio', "HAPPY NEW YEAR 🥳🎉", '01/01/2024', false,
+  Chat('Carolina Patrocínio', "HAPPY NEW YEAR 🎉🎊", '01/01/2024', false,
       MessageStatus.delivered),
   Chat('Martim Silva', "u too", '30/12/2023', false, MessageStatus.read),
   Chat('Alexandre Teixeira', "Merry Xmas :)", '25/12/2023', false),
@@ -196,7 +195,14 @@ class ChatsPageState extends State<ChatsPage> {
                   leading: CircleAvatar(
                     child: Text(chatHistory[index].userName[0]),
                   ),
-                  title: Text(chatHistory[index].userName),
+                  title: Text(
+                    chatHistory[index].userName,
+                    style: TextStyle(
+                      fontWeight: chatHistory[index].isUnread
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+                  ),
                   subtitle: Row(
                     children: [
                       switch (chatHistory[index].status) {
@@ -212,14 +218,16 @@ class ChatsPageState extends State<ChatsPage> {
                                 size: 15, color: Colors.lightBlueAccent)),
                         _ => const SizedBox(),
                       },
-                      Text(
-                        chatHistory[index].lastMessage,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: chatHistory[index].isUnread
-                              ? FontWeight.bold
-                              : FontWeight.normal,
+                      Expanded(
+                        child: Text(
+                          chatHistory[index].lastMessage,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontWeight: chatHistory[index].isUnread
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
                         ),
                       ),
                     ],
@@ -258,6 +266,7 @@ class ChatsPageState extends State<ChatsPage> {
                       barrierDismissible: true,
                       builder: (BuildContext context) {
                         return AlertDialog(
+                          icon: const Icon(Icons.delete, size: 40),
                           title: const Text('Delete this chat?'),
                           content: const SingleChildScrollView(
                             child: ListBody(
