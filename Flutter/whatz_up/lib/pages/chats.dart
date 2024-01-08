@@ -32,20 +32,17 @@ class ChatsPage extends StatefulWidget {
 }
 
 class ChatsPageState extends State<ChatsPage> {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
   bool _isExtended = true;
   List<Device> devices = [];
   List<Device> connectedDevices = [];
-  //late NearbyService nearbyService;
-  //late StreamSubscription subscription;
-  //late StreamSubscription receivedDataSubscription;
 
   DeviceType deviceType = DeviceType.advertiser;
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_scrollListener);
+    scrollController.addListener(scrollListener);
     init();
   }
 
@@ -55,12 +52,12 @@ class ChatsPageState extends State<ChatsPage> {
     receivedDataSubscription.cancel();
     nearbyService.stopBrowsingForPeers();
     nearbyService.stopAdvertisingPeer();*/
-    _scrollController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
-  _scrollListener() {
-    if (_scrollController.offset >= 50) {
+  scrollListener() {
+    if (scrollController.offset >= 50) {
       setState(() {
         _isExtended = false;
       });
@@ -119,7 +116,7 @@ class ChatsPageState extends State<ChatsPage> {
               padding: const EdgeInsets.all(15),
               child: Center(
                 child: Text(
-                  'You are not connected to any nearby friends.',
+                  'You are not connected to any nearby friends yet.',
                   style: Theme.of(context).textTheme.labelMedium!.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -155,7 +152,7 @@ class ChatsPageState extends State<ChatsPage> {
                         ),
                         child: Text(getButtonStateName(device.state)),
                       ),
-                      onTap: () => _onTabItemListener(device),
+                      onTap: () => context.push('/nearby', extra: device),
                     ),
                   ],
                 );
@@ -174,7 +171,7 @@ class ChatsPageState extends State<ChatsPage> {
           ),
           Expanded(
             child: ListView.builder(
-              controller: _scrollController,
+              controller: scrollController,
               itemCount: chatHistory.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
@@ -267,37 +264,40 @@ class ChatsPageState extends State<ChatsPage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        tooltip: 'Find nearby friends',
-        icon: Padding(
-          padding: _isExtended
-              ? const EdgeInsets.all(0)
-              : const EdgeInsets.only(right: 9.0),
-          child: const Icon(Icons.person_search),
+      floatingActionButton: Visibility(
+        visible: deviceType == DeviceType.advertiser,
+        child: FloatingActionButton.extended(
+          tooltip: 'Find nearby friends',
+          icon: Padding(
+            padding: _isExtended
+                ? const EdgeInsets.all(0)
+                : const EdgeInsets.only(right: 9.0),
+            child: const Icon(Icons.person_search),
+          ),
+          label: Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: AnimatedSize(
+                duration: const Duration(milliseconds: 200),
+                child: _isExtended
+                    ? const Padding(
+                        padding: EdgeInsets.only(right: 16),
+                        child: Text('Find nearby friends'),
+                      )
+                    : const Padding(padding: EdgeInsets.all(0))),
+          ),
+          extendedIconLabelSpacing: 0,
+          extendedPadding: const EdgeInsets.only(left: 17.0),
+          onPressed: () {
+            subscription.cancel();
+            receivedDataSubscription.cancel();
+            nearbyService.stopBrowsingForPeers();
+            nearbyService.stopAdvertisingPeer();
+            setState(() {
+              deviceType = DeviceType.browser;
+            });
+            init();
+          },
         ),
-        label: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: AnimatedSize(
-              duration: const Duration(milliseconds: 200),
-              child: _isExtended
-                  ? const Padding(
-                      padding: EdgeInsets.only(right: 16),
-                      child: Text('Find nearby friends'),
-                    )
-                  : const Padding(padding: EdgeInsets.all(0))),
-        ),
-        extendedIconLabelSpacing: 0,
-        extendedPadding: const EdgeInsets.only(left: 17.0),
-        onPressed: () {
-          subscription.cancel();
-          receivedDataSubscription.cancel();
-          nearbyService.stopBrowsingForPeers();
-          nearbyService.stopAdvertisingPeer();
-          setState(() {
-            deviceType = DeviceType.browser;
-          });
-          init();
-        },
       ),
     );
   }
@@ -342,36 +342,6 @@ class ChatsPageState extends State<ChatsPage> {
         return Colors.green;
       default:
         return Colors.red;
-    }
-  }
-
-  _onTabItemListener(Device device) {
-    if (device.state == SessionState.connected) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            final myController = TextEditingController();
-            return AlertDialog(
-              title: const Text("Send message"),
-              content: TextField(controller: myController),
-              actions: [
-                TextButton(
-                  child: const Text("Cancel"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: const Text("Send"),
-                  onPressed: () {
-                    nearbyService.sendMessage(
-                        device.deviceId, myController.text);
-                    myController.text = '';
-                  },
-                )
-              ],
-            );
-          });
     }
   }
 
@@ -424,15 +394,10 @@ class ChatsPageState extends State<ChatsPage> {
     subscription =
         nearbyService.stateChangedSubscription(callback: (devicesList) {
       for (var element in devicesList) {
-        print(
-            " deviceId: ${element.deviceId} | deviceName: ${element.deviceName} | state: ${element.state}");
-
-        if (Platform.isAndroid) {
-          if (element.state == SessionState.connected) {
-            nearbyService.stopBrowsingForPeers();
-          } else {
-            nearbyService.startBrowsingForPeers();
-          }
+        if (element.state == SessionState.connected) {
+          nearbyService.stopBrowsingForPeers();
+        } else {
+          nearbyService.startBrowsingForPeers();
         }
       }
 
@@ -448,7 +413,7 @@ class ChatsPageState extends State<ChatsPage> {
 
     receivedDataSubscription =
         nearbyService.dataReceivedSubscription(callback: (data) {
-      print("dataReceivedSubscription: ${jsonEncode(data)}");
+      null;
     });
   }
 }
