@@ -4,4 +4,16 @@ Social media app inspired on WhatsApp, but specifically for connecting people at
 
 <img src="assets/logos/logo.png" alt="WhatzUp logo" width="400">
 
-***Note:** for now, internet connection (Wi-Fi or mobile data) is required to obtain online media and fetch external API calls.*
+### Ready-to-deploy APK:
+https://github.com/jtsimoes/CM/releases/latest/download/whatz_up.apk
+
+### Minimum requirements:
+Android 6.0 (Marshmallow) with 70 MB of free storage
+
+### Permissions required:
+
+* Internet (WiFi or mobile data)
+* Bluetooth
+* Location/GPS (fine and coarse)
+* Calendar (read and write)
+* External storage (read and write)
