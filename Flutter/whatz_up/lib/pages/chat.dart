@@ -1,19 +1,23 @@
 import 'package:whatz_up/utils/globals.dart';
 
+enum MessageStatus { sent, delivered, read }
+
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key, String? userId}) : super(key: key);
+  final String? userId;
+
+  const ChatPage({Key? key, this.userId}) : super(key: key);
 
   @override
   ChatPageState createState() => ChatPageState();
 }
 
 class ChatPageState extends State<ChatPage> {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+    WidgetsBinding.instance.addPostFrameCallback((_) => scrollToBottom());
   }
 
   @override
@@ -35,25 +39,21 @@ class ChatPageState extends State<ChatPage> {
             ),
             Container(
               padding: const EdgeInsets.only(right: 10),
-              child: const CircleAvatar(
-                child: Text(
-                    'A'), // Replace with actual user's initials or profile picture
+              child: CircleAvatar(
+                child: Text(widget.userId![0]),
               ),
             ),
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'User A', // Replace with actual user's name
-                  style: TextStyle(fontSize: 18),
+                  widget.userId!,
+                  style: const TextStyle(fontSize: 18),
                 ),
-                Text(
-                  'Last seen today at 12:46', // "Last seen today at 12:46" or "Online"
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 11,
-                  ),
+                const Text(
+                  'Last seen today at 11:24',
+                  style: TextStyle(color: Colors.white54, fontSize: 11),
                 ),
               ],
             ),
@@ -65,201 +65,134 @@ class ChatPageState extends State<ChatPage> {
             icon: const Icon(Icons.videocam),
             tooltip: 'Video call',
             onPressed: () {
-              // TODO: Implement video call functionality
+              context.push('/call/${widget.userId}');
             },
+          ),
+          const SizedBox(
+            width: 5,
           ),
           IconButton(
             visualDensity: const VisualDensity(horizontal: -2.0, vertical: 0.0),
             icon: const Icon(Icons.call),
             tooltip: 'Call',
             onPressed: () {
-              // TODO: Implement voice call functionality
+              context.push('/call/${widget.userId}');
             },
           ),
-          PopupMenuButton<String>(
-            padding: EdgeInsets.zero,
-            onSelected: (value) {
-              print(value);
-            },
-            itemBuilder: (BuildContext context) {
-              return [
-                const PopupMenuItem(
-                  value: "View contact",
-                  child: Text("View contact"),
-                ),
-                const PopupMenuItem(
-                  value: "Media, links, and docs",
-                  child: Text("Media, links, and docs"),
-                ),
-                const PopupMenuItem(
-                  value: "Search",
-                  child: Text("Search"),
-                ),
-                const PopupMenuItem(
-                  value: "Mute notifications",
-                  child: Text("Mute notifications"),
-                ),
-                const PopupMenuItem(
-                  value: "Disapearing messages",
-                  child: Text("Disapearing messages"),
-                ),
-                const PopupMenuItem(
-                  value: "Wallpaper",
-                  child: Text("Wallpaper"),
-                ),
-              ];
-            },
-          )
+          const SizedBox(
+            width: 5,
+          ),
         ],
       ),
       body: Container(
         constraints: const BoxConstraints.expand(),
         decoration: BoxDecoration(
-            image: DecorationImage(
-                opacity: 0.5,
-                image: AssetImage(
-                    "assets/wallpapers/${profileBox.get('wallpaper', defaultValue: 'doodles')}.jpg"),
-                fit: BoxFit.cover)),
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: <Widget>[
-                  DateChip(
-                    date: DateTime(now.year, now.month, now.day - 2),
-                  ),
-                  BubbleNormalImage(
-                    id: 'id001',
-                    image: _image(),
-                    color: const Color(0xFF015146),
-                    tail: false,
-                    seen: true,
-                  ),
-                  DateChip(
-                    date: DateTime(now.year, now.month, now.day - 1),
-                  ),
-                  const BubbleSpecialTwo(
-                    text: 'bubble special one with tail',
-                    color: Color(0xFF015146),
-                    tail: false,
-                    sent: true,
-                    delivered: true,
-                    seen: true,
-                    textStyle: TextStyle(color: Colors.white),
-                  ),
-                  const BubbleSpecialOne(
-                    text: 'bubble special one without tail',
-                    isSender: false,
-                    tail: false,
-                    color: Color(0xFF36353a),
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  const BubbleSpecialOne(
-                    text: 'Message seen',
-                    tail: false,
-                    color: Color(0xFF015146),
-                    sent: true,
-                    delivered: true,
-                    seen: true,
-                    textStyle: TextStyle(color: Colors.white),
-                  ),
-                  const BubbleSpecialOne(
-                    text: 'Message delivered',
-                    tail: false,
-                    color: Color(0xFF015146),
-                    sent: true,
-                    delivered: true,
-                    seen: false,
-                    textStyle: TextStyle(color: Colors.white),
-                  ),
-                  const BubbleSpecialOne(
-                    text: 'Message sent',
-                    tail: false,
-                    color: Color(0xFF015146),
-                    sent: true,
-                    delivered: false,
-                    seen: false,
-                    textStyle: TextStyle(color: Colors.white),
-                  ),
-                  DateChip(
-                    date: now,
-                  ),
-                  const BubbleSpecialOne(
-                    text: 'Another one',
-                    tail: false,
-                    color: Color(0xFF015146),
-                    sent: true,
-                    delivered: false,
-                    seen: false,
-                    textStyle: TextStyle(color: Colors.white),
-                  ),
-                  const BubbleSpecialOne(
-                    text: 'And another one',
-                    tail: false,
-                    color: Color(0xFF015146),
-                    sent: true,
-                    delivered: false,
-                    seen: false,
-                    textStyle: TextStyle(color: Colors.white),
-                  ),
-                  const BubbleSpecialOne(
-                    text: 'DJ Khaled',
-                    tail: false,
-                    color: Color(0xFF36353a),
-                    isSender: false,
-                    textStyle: TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(
-                    height: 80,
-                  )
-                ],
+          image: DecorationImage(
+              opacity: 0.5,
+              image: AssetImage(
+                  "assets/wallpapers/${profileBox.get('wallpaper', defaultValue: 'doodles')}.jpg"),
+              fit: BoxFit.cover),
+        ),
+        child: SingleChildScrollView(
+          controller: scrollController,
+          child: Column(
+            children: <Widget>[
+              DateChip(date: DateTime(now.year, now.month - 1, now.day - 16)),
+              const TextMessage(
+                text: 'look a this Flutter meme 😂😂',
+                status: MessageStatus.read,
+              ),
+              BubbleNormalImage(
+                id: 'id001',
+                image: imageMessage(
+                    'https://pbs.twimg.com/media/E1nWxAQXMA8RZNY.jpg'),
+                color: const Color(0xFF015146),
+                tail: false,
+                seen: true,
+              ),
+              const TextMessage(text: 'AHAHAHAHAHAHA \nLove it 🤣'),
+              DateChip(date: DateTime(now.year, now.month, now.day - 2)),
+              const TextMessage(
+                  text:
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dui est, pretium id velit vestibulum, vulputate tristique odio. Aliquam erat volutpat. Pellentesque nec tristique leo. Proin sit amet magna sollicitudin dui vulputate placerat. Sed ut purus massa. Mauris laoreet eros nec hendrerit ullamcorper. Sed et enim ac mauris elementum consectetur.'),
+              const TextMessage(text: '???', status: MessageStatus.read),
+              const TextMessage(text: "Nevermind, it's just a test 😅"),
+              DateChip(date: DateTime(now.year, now.month, now.day - 1)),
+              const TextMessage(
+                text: 'hey, how are you doing?',
+                status: MessageStatus.read,
+              ),
+              const TextMessage(
+                text: 'I hope you are fine',
+                status: MessageStatus.read,
+              ),
+              const TextMessage(text: 'I am fine, thanks for asking!'),
+              const TextMessage(text: 'What about you?'),
+              const TextMessage(
+                text:
+                    "i am fine too, thanks!\ni'm just testing our project app ;)",
+                status: MessageStatus.read,
+              ),
+              const TextMessage(
+                  text:
+                      'So far, it seems to be working \njust fine. LGTM! What do you think?'),
+              const TextMessage(
+                text: "i think it's finished 😎",
+                status: MessageStatus.read,
+              ),
+              const TextMessage(
+                text: "and ready to be delivered 🚀",
+                status: MessageStatus.read,
+              ),
+              const TextMessage(
+                text: "Nice nice! Towards an 💯 grade!!",
+              ),
+              DateChip(date: now),
+              BubbleNormalImage(
+                id: 'id002',
+                image: imageMessage(
+                    'https://api-assets.ua.pt/v1/image/resizer?imageUrl=https%3A%2F%2Fapi-assets.ua.pt%2Ffiles%2Fimgs%2F000%2F005%2F602%2Foriginal.jpg&width=1280'),
+                color: const Color(0xFF36353a),
+                tail: false,
+                seen: true,
+                isSender: false,
+              ),
+              const TextMessage(
+                  text: "Hey, I'm ready for the presentation! Lets go? 💪"),
+              const SizedBox(
+                height: 90,
+              )
+            ],
+          ),
+        ),
+      ),
+      bottomSheet: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+              child: Text(
+                "You can no longer send messages to this chat because you are no longer near each other.",
+                style: TextStyle(color: Colors.white54),
+                textAlign: TextAlign.center,
               ),
             ),
-            MessageBar(
-              messageBarColor: Colors.black,
-              sendButtonColor: Colors.greenAccent,
-              messageBarHintStyle: const TextStyle(color: Colors.grey),
-              messageBarHitText: ' Message',
-              onSend: (_) => {print(_), _scrollToBottom()},
-              actions: [
-                InkWell(
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                  onTap: () {},
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
-                  child: InkWell(
-                    child: const Icon(
-                      Icons.emoji_emotions,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                    onTap: () {},
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _image() {
+  Widget imageMessage(String url) {
     return Container(
       constraints: const BoxConstraints(
         minHeight: 20.0,
         minWidth: 20.0,
       ),
       child: CachedNetworkImage(
-        imageUrl: 'https://pbs.twimg.com/media/E1nWxAQXMA8RZNY.jpg',
+        imageUrl: url,
         progressIndicatorBuilder: (context, url, downloadProgress) =>
             CircularProgressIndicator(value: downloadProgress.progress),
         errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -267,8 +200,38 @@ class ChatPageState extends State<ChatPage> {
     );
   }
 
-  // Call this method after adding a new message to the chat
-  void _scrollToBottom() {
-    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+  void scrollToBottom() {
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
+  }
+}
+
+class TextMessage extends StatelessWidget {
+  final String text;
+  final MessageStatus? status;
+
+  const TextMessage({Key? key, required this.text, this.status})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (status != null) {
+      return BubbleSpecialOne(
+        text: text,
+        color: const Color(0xFF015146),
+        tail: false,
+        sent: status == MessageStatus.sent,
+        delivered: status == MessageStatus.delivered,
+        seen: status == MessageStatus.read,
+        textStyle: const TextStyle(color: Colors.white),
+      );
+    } else {
+      return BubbleSpecialOne(
+        isSender: false,
+        text: text,
+        color: const Color(0xFF36353a),
+        tail: false,
+        textStyle: const TextStyle(color: Colors.white),
+      );
+    }
   }
 }
