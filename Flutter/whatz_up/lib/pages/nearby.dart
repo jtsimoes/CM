@@ -20,14 +20,12 @@ class NearbyChatPage extends StatefulWidget {
 
 class NearbyChatPageState extends State<NearbyChatPage> {
   final ScrollController scrollController = ScrollController();
+  final TextEditingController messageController = TextEditingController();
   List<Message> messages = [];
+  SessionState connectionStatus = SessionState.connected;
 
   void scrollToBottom() {
-    scrollController.animateTo(
-      scrollController.position.maxScrollExtent + 50,
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeOut,
-    );
+    scrollController.jumpTo(scrollController.position.maxScrollExtent + 50);
   }
 
   @override
@@ -48,6 +46,39 @@ class NearbyChatPageState extends State<NearbyChatPage> {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
+
+    receivedDataSubscription.cancel();
+
+    subscription = nearbyService.stateChangedSubscription(
+      callback: (devicesList) {
+        Device device = devicesList.firstWhere(
+            (element) => element.deviceId == widget.device!.deviceId);
+        setState(() {
+          connectionStatus = device.state;
+        });
+        showDialog<String>(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            icon: const Icon(Icons.speaker_notes_off, size: 40),
+            title: Text('${device.deviceName} has disconnected'),
+            content: Text(
+              "The connection to ${device.deviceName}'s device has been closed. \nYou can no longer send nearby messages to this chat.",
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primaryContainer,
+                ),
+                onPressed: () => context.go('/'),
+                child: const Text('Exit'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
 
     receivedDataSubscription = nearbyService.dataReceivedSubscription(
       callback: (data) {
@@ -93,9 +124,13 @@ class NearbyChatPageState extends State<NearbyChatPage> {
                   widget.device!.deviceName,
                   style: const TextStyle(fontSize: 18),
                 ),
-                const Text(
-                  "Online",
-                  style: TextStyle(
+                Text(
+                  switch (connectionStatus) {
+                    SessionState.notConnected => "Disconnected",
+                    SessionState.connecting => "Reconnecting...",
+                    _ => "Connected",
+                  },
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 13,
                   ),
@@ -119,12 +154,9 @@ class NearbyChatPageState extends State<NearbyChatPage> {
           children: [
             SingleChildScrollView(
               controller: scrollController,
-              padding: const EdgeInsets.only(bottom: 60),
               child: Column(
                 children: <Widget>[
-                  DateChip(
-                    date: now,
-                  ),
+                  DateChip(date: now),
                   ...messages
                       .map((message) => BubbleSpecialOne(
                             text: message.text,
@@ -140,44 +172,63 @@ class NearbyChatPageState extends State<NearbyChatPage> {
                           ))
                       .toList(),
                   const SizedBox(
-                    height: 15,
+                    height: 80,
                   )
                 ],
               ),
             ),
-            MessageBar(
-              messageBarColor: Colors.black,
-              sendButtonColor: const Color(0xFF015146),
-              messageBarHintStyle: const TextStyle(color: Colors.grey),
-              messageBarHitText: ' Message',
-              onSend: (message) {
+          ],
+        ),
+      ),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Row(
+          children: <Widget>[
+            IconButton(
+              tooltip: 'Insert an emoji',
+              icon: const Icon(Icons.emoji_emotions),
+              onPressed: () {},
+            ),
+            Expanded(
+              child: TextField(
+                controller: messageController,
+                minLines: 1,
+                maxLines: 5,
+                keyboardType: TextInputType.multiline,
+                textCapitalization: TextCapitalization.sentences,
+                decoration: const InputDecoration(
+                  hintText: 'Type a message...',
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            IconButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Theme.of(context).colorScheme.primaryContainer),
+                minimumSize: MaterialStateProperty.all(const Size(45, 45)),
+              ),
+              tooltip: 'Send a message',
+              icon: const Icon(Icons.send),
+              onPressed: () {
+                if (widget.device!.state != SessionState.connected) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      showCloseIcon: true,
+                      content: Text(
+                          "You can no longer send messages to this chat because you are no longer near each other."),
+                    ),
+                  );
+                }
+                if (messageController.text.isEmpty) return;
+                String message = messageController.text;
                 nearbyService.sendMessage(widget.device!.deviceId, message);
                 setState(() {
                   messages.add(Message(message, true));
                 });
                 scrollToBottom();
+                messageController.clear();
               },
-              actions: [
-                InkWell(
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                  onTap: () {},
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
-                  child: InkWell(
-                    child: const Icon(
-                      Icons.emoji_emotions,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                    onTap: () {},
-                  ),
-                ),
-              ],
             ),
           ],
         ),
