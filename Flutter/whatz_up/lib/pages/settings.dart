@@ -346,7 +346,7 @@ class SettingsPageState extends State<SettingsPage> {
                   fit: BoxFit.cover,
                 ),
                 applicationLegalese:
-                    'João Simões (88930) \nPedro Duarte (97673) \n© 2023',
+                    'João Simões (88930) \nPedro Duarte (97673) \n© 2024',
                 children: const [
                   Text(
                       "\nWhatzUp is a social media app inspired on WhatsApp, but specifically for connecting people at social events."),
