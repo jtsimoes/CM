@@ -65,10 +65,10 @@ class ChatsPageState extends State<ChatsPage> {
 
   @override
   void dispose() {
-    /*subscription.cancel();
+    subscription.cancel();
     receivedDataSubscription.cancel();
     nearbyService.stopBrowsingForPeers();
-    nearbyService.stopAdvertisingPeer();*/
+    nearbyService.stopAdvertisingPeer();
     scrollController.dispose();
     super.dispose();
   }
@@ -164,13 +164,12 @@ class ChatsPageState extends State<ChatsPage> {
                       trailing: ElevatedButton(
                         onPressed: () => _onButtonClicked(device),
                         style: ElevatedButton.styleFrom(
-                          //backgroundColor: Theme.of(context).colorScheme.errorContainer,
-                          backgroundColor: getButtonColor(device
-                              .state), //Theme.of(context).colorScheme.primaryContainer,
-                        ),
+                            backgroundColor: getButtonColor(device.state)),
                         child: Text(getButtonStateName(device.state)),
                       ),
-                      onTap: () => context.push('/nearby', extra: device),
+                      onTap: () => (device.state == SessionState.connected)
+                          ? context.push('/nearby', extra: device)
+                          : null,
                     ),
                   ],
                 );
@@ -386,11 +385,11 @@ class ChatsPageState extends State<ChatsPage> {
   String getStateName(SessionState state) {
     switch (state) {
       case SessionState.notConnected:
-        return "disconnected";
+        return "Disconnected";
       case SessionState.connecting:
-        return "waiting";
+        return "Connecting";
       default:
-        return "connected";
+        return "Connected";
     }
   }
 
@@ -408,7 +407,7 @@ class ChatsPageState extends State<ChatsPage> {
   Color getStateColor(SessionState state) {
     switch (state) {
       case SessionState.notConnected:
-        return Colors.black;
+        return Colors.white70;
       case SessionState.connecting:
         return Colors.grey;
       default:
@@ -419,8 +418,9 @@ class ChatsPageState extends State<ChatsPage> {
   Color getButtonColor(SessionState state) {
     switch (state) {
       case SessionState.notConnected:
+        return Colors.green[800]!;
       case SessionState.connecting:
-        return Colors.green;
+        return Colors.grey;
       default:
         return Colors.red;
     }
